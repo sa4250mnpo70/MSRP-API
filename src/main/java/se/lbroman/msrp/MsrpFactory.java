@@ -8,15 +8,15 @@ package se.lbroman.msrp;
  */
 public class MsrpFactory {
 
-	private static String path = "com.atosorigin";
-	private static String stackImplPath = ".msrp.MsrpStackImpl";
+	private static String path = "se.lbroman.msrp.impl";
+	private static String implementationClass = ".MsrpStackImpl";
 
 	/**
-	 * Set the path to the class .msrp.MsrpStackImpl . The default for this
-	 * implementation is com.atosorigin
+	 * Set the path to the class .MsrpStackImpl . The default for this
+	 * implementation is se.lbroman.msrp.impl
 	 * 
 	 * @param path
-	 *            the path to .msrp.MsrpStackImpl
+	 *            the path to the class .MsrpStackImpl
 	 */
 	public static void setPath(String path) {
 		MsrpFactory.path = path;
@@ -35,7 +35,7 @@ public class MsrpFactory {
 	 */
 	public static MsrpStack createStack() throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException {
-		return (MsrpStack) Class.forName(path + stackImplPath).newInstance();
+		return (MsrpStack) Class.forName(path + implementationClass).newInstance();
 	}
 
 }

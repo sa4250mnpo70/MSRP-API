@@ -24,7 +24,6 @@ import se.lbroman.msrp.data.MsrpURI;
  * The Use-Path does not contain the From-Path local uri!
  * 
  * @author Leonard Broman
- * @see com.atosorigin.msrp.ConnectionImpl
  */
 public interface UsePathHeader extends PathHeader {
 
