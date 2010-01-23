@@ -16,8 +16,8 @@
 		</license>
 	</licenses>
 	<modules>
-		<module>msrp-api</module>
-		<module>msrp-stack</module>
+		<module>api</module>
+		<module>stack</module>
 	</modules>
 	<developers>
 		<developer>
