@@ -8,7 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import se.lbroman.msrp.data.header.MsrpHeader.HEADER_TYPE;
-import se.lbroman.msrp.exception.ParseErrorException;
+import se.lbroman.msrp.impl.exception.ParseErrorException;
 
 
 /**

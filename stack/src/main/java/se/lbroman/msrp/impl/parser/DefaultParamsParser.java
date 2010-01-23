@@ -63,8 +63,6 @@ public class DefaultParamsParser<E extends Enum<E>> implements ParamsParser<E> {
 		type = enumType;
 		logger.debug("Searching with regex: " + pattern.pattern());
 		for (E e : type.getEnumConstants()) {
-			// logger.trace("Loaded parameter type: " + e.toString() + " for "
-			// + enumType.toString());
 			logger.trace("Loaded parameter type: " + e.toString());
 			map.put(e.toString(), e);
 		}
@@ -78,6 +76,7 @@ public class DefaultParamsParser<E extends Enum<E>> implements ParamsParser<E> {
 				+ " does not exist for " + type);
 	}
 
+	@Override
 	public Pair<EnumMap<E, String>, List<Parameter>> parse(
 			String data) throws HeaderParseErrorException {
 		assert data != null;
@@ -112,6 +111,7 @@ public class DefaultParamsParser<E extends Enum<E>> implements ParamsParser<E> {
 		return pair;
 	}
 
+	@Override
 	public boolean checkTokenParam(E param, String data) {
 		if (tokenParamPattern.matcher(data).matches()) {
 			String[] vals = data.split("=");
@@ -122,6 +122,7 @@ public class DefaultParamsParser<E extends Enum<E>> implements ParamsParser<E> {
 		return false;
 	}
 
+	@Override
 	public boolean checkQuotedParam(E param, String data) {
 		if (quotedStringPattern.matcher(data).matches()) {
 			String[] vals = data.split("=");

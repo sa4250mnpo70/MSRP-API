@@ -15,6 +15,7 @@ import se.lbroman.msrp.impl.data.Pair;
 import se.lbroman.msrp.impl.data.Parameter;
 import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
 import se.lbroman.msrp.impl.parser.DefaultParamsParser;
+import se.lbroman.msrp.impl.parser.ParamsParser;
 
 
 /**
@@ -64,7 +65,7 @@ public class WWWAuthenticateHeaderImpl extends MsrpHeaderImpl implements
 	private List<Parameter> extraParams = new LinkedList<Parameter>();
 	private EnumMap<PARAMETER, String> params = new EnumMap<PARAMETER, String>(
 			PARAMETER.class);
-	private static DefaultParamsParser<PARAMETER> parser = new DefaultParamsParser<PARAMETER>(
+	private static ParamsParser<PARAMETER> parser = new DefaultParamsParser<PARAMETER>(
 			PARAMETER.class);
 	private static Random r = new Random(System.currentTimeMillis());
 

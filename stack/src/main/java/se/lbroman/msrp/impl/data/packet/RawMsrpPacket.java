@@ -12,9 +12,9 @@ import org.apache.commons.logging.LogFactory;
 
 import se.lbroman.msrp.data.header.MsrpHeader.HEADER_TYPE;
 import se.lbroman.msrp.data.packet.MsrpPacket.PACKET_TYPE;
-import se.lbroman.msrp.exception.ParseErrorException;
 import se.lbroman.msrp.impl.data.ByteArrays;
 import se.lbroman.msrp.impl.data.header.RawMsrpHeader;
+import se.lbroman.msrp.impl.exception.ParseErrorException;
 
 /**
  * This packet parses a raw byte array containing one transaction into an MSRP
