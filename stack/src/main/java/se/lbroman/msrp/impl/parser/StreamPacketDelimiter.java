@@ -32,12 +32,17 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 	private InputStream is;
 	private Log logger = LogFactory.getLog(StreamPacketDelimiter.class);
 
+	StreamPacketDelimiter() {
+    }
+	
 	/**
 	 * 
 	 * @param is
 	 */
 	public StreamPacketDelimiter(InputStream is) {
-		logger.trace("Creating packet delimiter");
+	    if (logger.isTraceEnabled()) {
+	        logger.trace("Creating packet delimiter");
+	    }
 		this.is = is;
 	}
 
@@ -128,13 +133,16 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 	 *             If the data in the buffer does not contain a proper MSRP
 	 *             packet
 	 */
-	private byte[] extractPacket() throws NoPacketFoundException,
+	byte[] extractPacket() throws NoPacketFoundException,
 			ParseErrorException {
 		// logger.trace("extractPacket()");
 		/*
 		 * The start should contain: "MSRP" SP id SP The end should contain: CR
 		 * LF "-------" id ("$" / "+" / "#") CR LF
 		 */
+	    if (size == 0) {
+	        throw new NoPacketFoundException();
+	    }
 		byte[] msrp = "MSRP".getBytes();
 		// byte[] fin = "-------".getBytes();
 		int pos = start;
