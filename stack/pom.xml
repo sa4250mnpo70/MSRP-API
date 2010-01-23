@@ -5,9 +5,13 @@
 	<groupId>se.lbroman.msrp</groupId>
 	<artifactId>msrp-impl</artifactId>
 	<name>MSRP Stack implementation</name>
-	<version>0.1-SNAPSHOT</version>
 	<description>MSRP Stack implementation</description>
 	<packaging>jar</packaging>
+	<parent>
+		<groupId>se.lbroman.msrp</groupId>
+		<artifactId>msrp</artifactId>
+		<version>0.1-SNAPSHOT</version>
+	</parent>
 	<licenses>
 		<license>
 			<name>Apache 2</name>
@@ -39,6 +43,16 @@
 			</plugin>
 		</plugins>
 	</build>
+<reporting>
+        <plugins>
+        <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>emma-maven-plugin</artifactId>
+                <inherited>true</inherited>
+        </plugin>
+</plugins>
+</reporting>
+
 	<dependencies>
 		<dependency>
 			<groupId>se.lbroman.msrp</groupId>
