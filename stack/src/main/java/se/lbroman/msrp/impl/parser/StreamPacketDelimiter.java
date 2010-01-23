@@ -27,9 +27,9 @@ import se.lbroman.msrp.impl.exception.ParseErrorException;
 public class StreamPacketDelimiter implements PacketDelimiter {
 
 	public static final int maxSize = 1024 * 2 * 2;
-	private byte[] buffer = new byte[maxSize];
+	byte[] buffer = new byte[maxSize];
 	private int start = 0;
-	private int size = 0;
+	int size = 0;
 	private InputStream is;
 	private Log logger = LogFactory.getLog(StreamPacketDelimiter.class);
 
@@ -141,7 +141,7 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 		 * The start should contain: "MSRP" SP id SP The end should contain: CR
 		 * LF "-------" id ("$" / "+" / "#") CR LF
 		 */
-	    if (size == 0) {
+	    if (size < 4) {
 	        throw new NoPacketFoundException();
 	    }
 		byte[] msrp = "MSRP".getBytes();
@@ -155,6 +155,9 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 				logger.trace("Invalid buffer data, dumping: \n" + dumpBuffer());
 			}
 			throw new ParseErrorException();
+		}
+		if (size < 5) {
+		    throw new NoPacketFoundException();
 		}
 		// After MSRP a space
 		if (buffer[pos] == ' ') {
