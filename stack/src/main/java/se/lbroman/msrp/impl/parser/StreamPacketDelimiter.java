@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import se.lbroman.msrp.impl.data.ByteArrays;
+import se.lbroman.msrp.impl.data.ByteUtils;
 import se.lbroman.msrp.impl.data.packet.RawMsrpPacket;
 import se.lbroman.msrp.impl.exception.NoPacketFoundException;
 import se.lbroman.msrp.impl.exception.ParseErrorException;
@@ -32,6 +33,8 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 	int size = 0;
 	private InputStream is;
 	private Log logger = LogFactory.getLog(StreamPacketDelimiter.class);
+	
+	ByteUtils byteUtils = new ByteArrays();
 
 	StreamPacketDelimiter() {
     }
@@ -148,7 +151,7 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 		// byte[] fin = "-------".getBytes();
 		int pos = start;
 		// Check that we are at start of packet
-		if (ByteArrays.equalsSubRange(buffer, pos, msrp, 0, 4)) {
+		if (byteUtils.equalsSubRange(buffer, pos, msrp, 0, 4)) {
 			pos += 4;
 		} else {
 			if (logger.isTraceEnabled()) {
@@ -180,7 +183,7 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 			    throw new ParseErrorException();
 			}
 		}
-		byte[] id = ByteArrays.subRange(buffer, recordStart, pos - recordStart);
+		byte[] id = byteUtils.subRange(buffer, recordStart, pos - recordStart);
 
 		boolean found = false;
 		while (!found) {
@@ -216,7 +219,7 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 					if (ok) {
 						pos++;
 						// We're good! Now we should have the id
-						if (ByteArrays.equalsSubRange(buffer, pos, id, 0,
+						if (byteUtils.equalsSubRange(buffer, pos, id, 0,
 								id.length)) {
 							// We got the ID!
 							pos += id.length;
@@ -229,7 +232,7 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 						if (buffer[pos] == '$' || buffer[pos] == '+'
 								|| buffer[pos] == '#') {
 							// YES! It is a packet!!!
-							byte[] packet = ByteArrays.subRange(buffer, start,
+							byte[] packet = byteUtils.subRange(buffer, start,
 									pos - start + 3);
 							start += packet.length;
 							size -= packet.length;
@@ -256,7 +259,6 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 	}
 
 	public String dumpBuffer() {
-		// logger.trace("dumpBuffer()");
 		return new String("Buffer start: " + start + "\nBuffer size: " + size
 				+ "\n" + new String(buffer));
 	}

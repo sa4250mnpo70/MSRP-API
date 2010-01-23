@@ -13,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 import se.lbroman.msrp.data.header.MsrpHeader.HEADER_TYPE;
 import se.lbroman.msrp.data.packet.MsrpPacket.PACKET_TYPE;
 import se.lbroman.msrp.impl.data.ByteArrays;
+import se.lbroman.msrp.impl.data.ByteUtils;
 import se.lbroman.msrp.impl.data.header.RawMsrpHeader;
 import se.lbroman.msrp.impl.exception.ParseErrorException;
 
@@ -34,6 +35,7 @@ public class RawMsrpPacket {
 	private byte[] content;
 	private byte[] packet;
 	private int pos = 0;
+	ByteUtils byteUtils = new ByteArrays();
 
 	public RawMsrpPacket(byte[] packet) throws ParseErrorException {
 		this.packet = packet;
@@ -70,7 +72,7 @@ public class RawMsrpPacket {
 			// TODO MIME header treatment
 			content = new byte[packet.length - pos - 3
 					- transactionID.getBytes().length - 7 - 2 - 2];
-			ByteArrays
+			byteUtils
 					.copySubRange(packet, pos + 2, content, 0, content.length);
 		} else {
 			RawMsrpHeader h;
@@ -124,7 +126,7 @@ public class RawMsrpPacket {
 		}
 		pos++;
 		byte[] neu = new byte[pos - s - 2];
-		ByteArrays.copySubRange(packet, s, neu, 0, neu.length);
+		byteUtils.copySubRange(packet, s, neu, 0, neu.length);
 		return neu;
 	}
 

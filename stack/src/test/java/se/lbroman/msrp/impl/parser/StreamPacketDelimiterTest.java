@@ -6,12 +6,15 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import se.lbroman.msrp.impl.data.ByteArrays;
+import se.lbroman.msrp.impl.data.ByteUtils;
 import se.lbroman.msrp.impl.exception.NoPacketFoundException;
 import se.lbroman.msrp.impl.exception.ParseErrorException;
 
 public class StreamPacketDelimiterTest {
     
     StreamPacketDelimiter delimiter = new StreamPacketDelimiter();
+    
+    ByteUtils byteUtils = new ByteArrays();
     
     
     @Test
@@ -59,7 +62,7 @@ public class StreamPacketDelimiterTest {
 
     private void charge(String data) {
         delimiter.size = data.length();
-        ByteArrays.copySubRange(data.getBytes(), 0, delimiter.buffer, 0, data.length());
+        byteUtils.copySubRange(data.getBytes(), 0, delimiter.buffer, 0, data.length());
     }
 
 }
