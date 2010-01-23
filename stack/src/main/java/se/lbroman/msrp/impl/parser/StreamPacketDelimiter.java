@@ -175,7 +175,8 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 		for (int count = 0;; pos++,count++) {
 			if (buffer[pos] == ' ')
 				break;
-			if (count > 32) {
+			if (count == 32) {
+			    // Character 33 not a space
 			    throw new ParseErrorException();
 			}
 		}

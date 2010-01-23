@@ -48,7 +48,7 @@ public class StreamPacketDelimiterTest {
     
     @Test
     public void ParseErrorOnLongIds() throws NoPacketFoundException {
-        charge("MSRP 4askljdfhalksdj7236482364sdfsdf82736 ");
+        charge("MSRP 123456789012345678901234567890123 ");
         try {
             delimiter.extractPacket();
             fail();
