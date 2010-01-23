@@ -45,6 +45,17 @@ public class StreamPacketDelimiterTest {
             
         }
     }
+    
+    @Test
+    public void ParseErrorOnLongIds() throws NoPacketFoundException {
+        charge("MSRP 4askljdfhalksdj7236482364sdfsdf82736 ");
+        try {
+            delimiter.extractPacket();
+            fail();
+        } catch (ParseErrorException e) {
+            
+        }
+    }
 
     private void charge(String data) {
         delimiter.size = data.length();

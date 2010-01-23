@@ -165,19 +165,22 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 		} else
 			throw new ParseErrorException();
 		// Extract the transaction-id
+        // ident = ALPHANUM  3*31ident-char
+        // ident-char = ALPHANUM / "." / "-" / "+" / "%" / "="
 		if (size < 6) {
 		    throw new NoPacketFoundException();
 		}
 		int recordStart = pos;
-		for (;; pos++) {
+		
+		for (int count = 0;; pos++,count++) {
 			if (buffer[pos] == ' ')
 				break;
+			if (count > 32) {
+			    throw new ParseErrorException();
+			}
 		}
 		byte[] id = ByteArrays.subRange(buffer, recordStart, pos - recordStart);
-		// byte[] id = new byte[pos - recordStart];
-		// ByteArrays.copySubRange(buffer, recordStart, id, 0, id.length);
-		// Find the end
-		// CR LF "-------" id ("$" / "+" / "#") CR LF
+
 		boolean found = false;
 		while (!found) {
 			if (pos > start + size) {
