@@ -30,4 +30,32 @@
 			</roles>
 		</developer>
 	</developers>
+	<build>
+	<plugins>
+	<plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>emma-maven-plugin</artifactId>
+            <inherited>true</inherited>
+            <executions>
+              <execution>
+                <id>instrument</id>
+                <phase>pre-site</phase>
+                <goals>
+                  <goal>instrument</goal>
+                </goals>
+              </execution>
+            </executions>
+        </plugin>
+
+</plugins>
+</build>
+<reporting>
+	<plugins>
+	<plugin>
+		<groupId>org.codehaus.mojo</groupId>
+		<artifactId>emma-maven-plugin</artifactId>
+		<inherited>true</inherited>
+	</plugin>
+</plugins>
+</reporting>
 </project>

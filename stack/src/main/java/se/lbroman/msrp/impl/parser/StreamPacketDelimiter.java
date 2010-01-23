@@ -20,6 +20,7 @@ import se.lbroman.msrp.impl.exception.ParseErrorException;
  * up the datastream into arrays each containing one msrp transaction. This is
  * the point where the stack extract the data from the socket.
  * 
+ * TODO: Move the buffer logic out of here
  * 
  * @author Leonard Broman
  */
