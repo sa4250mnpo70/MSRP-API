@@ -26,14 +26,29 @@ public class StreamPacketDelimiterTest {
     
     @Test
     public void NoPacketFoundInMSRPOnlyBuffer() throws ParseErrorException {
-        delimiter.size = 4;
-        ByteArrays.copySubRange("MSRP".getBytes(), 0, delimiter.buffer, 0, 4);
+        charge("MSRP");
         try {
             delimiter.extractPacket();
             fail();
         } catch (NoPacketFoundException e) {
             
         }
+    }
+    
+    @Test
+    public void NoPacketFoundInMSRPSpaceOnlyBuffer() throws ParseErrorException {
+        charge("MSRP ");
+        try {
+            delimiter.extractPacket();
+            fail();
+        } catch (NoPacketFoundException e) {
+            
+        }
+    }
+
+    private void charge(String data) {
+        delimiter.size = data.length();
+        ByteArrays.copySubRange(data.getBytes(), 0, delimiter.buffer, 0, data.length());
     }
 
 }

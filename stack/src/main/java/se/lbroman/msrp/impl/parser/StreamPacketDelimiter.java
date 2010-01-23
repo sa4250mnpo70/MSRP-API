@@ -165,6 +165,9 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 		} else
 			throw new ParseErrorException();
 		// Extract the transaction-id
+		if (size < 6) {
+		    throw new NoPacketFoundException();
+		}
 		int recordStart = pos;
 		for (;; pos++) {
 			if (buffer[pos] == ' ')
