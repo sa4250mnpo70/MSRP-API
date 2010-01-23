@@ -29,7 +29,7 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 
 	public static final int maxSize = 1024 * 2 * 2;
 	byte[] buffer = new byte[maxSize];
-	private int start = 0;
+	int start = 0;
 	int size = 0;
 	private InputStream is;
 	private Log logger = LogFactory.getLog(StreamPacketDelimiter.class);
@@ -96,7 +96,7 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 	 * @return True if the internal buffer has data, false otherwise
 	 * @throws IOException
 	 */
-	private boolean reBuffer() throws IOException {
+	boolean reBuffer() throws IOException {
 		// logger.trace("reBuffer()");
 		// logger.trace("Rebuffering, buffer state:\n" + dumpBuffer());
 		if (start > 0) {
