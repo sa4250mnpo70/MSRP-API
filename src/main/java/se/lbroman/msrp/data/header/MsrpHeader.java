@@ -9,7 +9,7 @@ import se.lbroman.msrp.Encodable;
  * The header format is simply: KEY VALUE
  * 
  * where the key is given with a trailing COLON SPACE , the value is the rest
- * 
+ *  
  * @author Leonard Broman
  * 
  */
@@ -70,7 +70,7 @@ public interface MsrpHeader extends Encodable<String> {
 	 * 
 	 * @return a copy
 	 */
-	public MsrpHeader clone() throws CloneNotSupportedException;
+	public MsrpHeader clone() throws UnsupportedOperationException;
 
 	public HEADER_TYPE getType();
 

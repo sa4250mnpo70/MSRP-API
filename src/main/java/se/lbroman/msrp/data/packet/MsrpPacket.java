@@ -99,8 +99,8 @@ public interface MsrpPacket {
 	/**
 	 * 
 	 * @return a copy
-	 * @throws CloneNotSupportedException
+	 * @throws UnsupportedOperationException
 	 */
-	public MsrpPacket clone() throws CloneNotSupportedException;
+	public MsrpPacket clone() throws UnsupportedOperationException;
 
 }
