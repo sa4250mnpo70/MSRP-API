@@ -32,7 +32,7 @@
 	</developers>
 	<build>
 	<plugins>
-	<plugin>
+	<!--<plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>emma-maven-plugin</artifactId>
             <inherited>true</inherited>
@@ -45,7 +45,14 @@
                 </goals>
               </execution>
             </executions>
-        </plugin>
+        </plugin> -->
+<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <encoding>UTF-8</encoding>
+        </configuration>
+
 
 </plugins>
 </build>
