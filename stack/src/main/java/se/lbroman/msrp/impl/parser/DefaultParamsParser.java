@@ -1,7 +1,7 @@
 /**
  * 
  */
-package se.lbroman.msrp.impl.data.header;
+package se.lbroman.msrp.impl.parser;
 
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -24,7 +24,7 @@ import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
  * @author Leonard Broman
  * 
  */
-public class ParamsParser<E extends Enum<E>> {
+public class DefaultParamsParser<E extends Enum<E>> implements ParamsParser<E> {
 
 	private static Log logger = LogFactory.getLog(ParamsParser.class);
 
@@ -59,7 +59,7 @@ public class ParamsParser<E extends Enum<E>> {
 
 	private Class<E> type;
 
-	public ParamsParser(Class<E> enumType) {
+	public DefaultParamsParser(Class<E> enumType) {
 		type = enumType;
 		logger.debug("Searching with regex: " + pattern.pattern());
 		for (E e : type.getEnumConstants()) {
