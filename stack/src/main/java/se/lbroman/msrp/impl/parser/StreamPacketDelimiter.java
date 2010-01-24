@@ -83,7 +83,7 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 		} catch (NoPacketFoundException e) {
 			logger.debug(e);
 			if (size == maxSize) {
-			    logger.warn(String.format("Full buffer detected for size {0} starting at {1}",size,start));
+			    logger.warn(String.format("Full buffer detected for size %1$s starting at %2$s",size,start));
 				throw new ParseErrorException(
 						"Buffer blocked by too large packet");
 			}

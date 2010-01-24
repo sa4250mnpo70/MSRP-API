@@ -145,11 +145,9 @@ public class ByteRangeHeaderImpl extends MsrpHeaderImpl implements
 
 	@Override
 	public String getValue() {
-		if (end == -1) {
-			return start + "-*/" + total;
-		} else {
-			return start + "-" + end + "/" + total;
-		}
+		return start + "-" + 
+		        (end == -1 ? "*" : end) + "/" + 
+		        (total == -1 ? "*" : total);
 	}
 
 	@Override

@@ -81,7 +81,7 @@ public abstract class MsrpHeaderImpl implements MsrpHeader {
 	 * @see MsrpHeader#encode()
 	 */
 	public String encode() {
-		return getKey() + getValue();
+		return String.format("%1$s: %2$s",getKey(),getValue());
 	}
 
 	@Override
