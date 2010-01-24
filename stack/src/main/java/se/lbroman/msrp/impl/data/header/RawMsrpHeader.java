@@ -14,14 +14,23 @@ import se.lbroman.msrp.impl.exception.ParseErrorException;
 /**
  * @author Leonard Broman
  * 
+ * @see se.lbroman.msrp.impl.parser.HeaderParser
  */
 public class RawMsrpHeader {
 
-	private Log logger = LogFactory.getLog(RawMsrpHeader.class);
+	private static Log logger = LogFactory.getLog(RawMsrpHeader.class);
 	private HEADER_TYPE type;
 	private String key;
 	private String content;
 
+	/**
+	 * 
+	 * @param line
+	 * @throws ParseErrorException
+	 * @deprecated use the parser instead
+	 * @see se.lbroman.msrp.impl.parser.HeaderParser
+	 */
+	@Deprecated
 	public RawMsrpHeader(String line) throws ParseErrorException {
 		// logger.trace("RawMsrpHeader(String line)");
 		try {
@@ -51,7 +60,13 @@ public class RawMsrpHeader {
 		}
 	}
 
-	/**
+	public RawMsrpHeader(HEADER_TYPE type2, String key2, String content2) {
+        this.type = type2;
+        this.key = key2;
+        this.content = content2;
+    }
+
+    /**
 	 * @return the key
 	 */
 	public String getKey() {

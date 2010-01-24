@@ -27,15 +27,20 @@ import se.lbroman.msrp.impl.exception.ParseErrorException;
  */
 public class StreamPacketDelimiter implements PacketDelimiter {
 
-	public static final int maxSize = 1024 * 2 * 2;
-	byte[] buffer = new byte[maxSize];
-	int start = 0;
-	int size = 0;
+    private static Log logger = LogFactory.getLog(StreamPacketDelimiter.class);
+
+	private int maxSize = 1024 * 2 * 2;
+	byte[] buffer;
+	int start;
+	int size;
 	private InputStream is;
-	private Log logger = LogFactory.getLog(StreamPacketDelimiter.class);
 	
 	ByteUtils byteUtils = new ByteArrays();
 
+	{
+	    init();
+	}
+	
 	StreamPacketDelimiter() {
     }
 	
@@ -78,6 +83,7 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 		} catch (NoPacketFoundException e) {
 			logger.debug(e);
 			if (size == maxSize) {
+			    logger.warn(String.format("Full buffer detected for size {0} starting at {1}",size,start));
 				throw new ParseErrorException(
 						"Buffer blocked by too large packet");
 			}
@@ -136,10 +142,11 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 	 * @throws exception.InvalidDataException
 	 *             If the data in the buffer does not contain a proper MSRP
 	 *             packet
+	 * 
+	 * @see http://tools.ietf.org/html/rfc4975#section-9
 	 */
 	byte[] extractPacket() throws NoPacketFoundException,
 			ParseErrorException {
-		// logger.trace("extractPacket()");
 		/*
 		 * The start should contain: "MSRP" SP id SP The end should contain: CR
 		 * LF "-------" id ("$" / "+" / "#") CR LF
@@ -180,7 +187,7 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 				break;
 			if (count == 32) {
 			    // Character 33 not a space
-			    throw new ParseErrorException();
+			    throw new ParseErrorException("The ID field exceeded 32 characters");
 			}
 		}
 		byte[] id = byteUtils.subRange(buffer, recordStart, pos - recordStart);
@@ -270,6 +277,17 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 			return true;
 		} else
 			return false;
+	}
+	
+	void setMaxSize(int maxSize) {
+	    this.maxSize = maxSize;
+	    init();
+	}
+	
+	private void init() {
+	    buffer = new byte[maxSize];
+	    size = 0;
+	    start = 0;
 	}
 
 }
