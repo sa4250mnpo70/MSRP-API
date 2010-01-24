@@ -9,7 +9,7 @@ package se.lbroman.msrp.data.header;
  */
 public interface StatusHeader extends MsrpHeader {
 
-	public static final String key = MsrpHeader.HEADER_TYPE.Status.getKey();
+	public static final String key = "Status";
 
 	public int getCode();
 

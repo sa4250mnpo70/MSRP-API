@@ -9,7 +9,7 @@ package se.lbroman.msrp.data.header;
  */
 public interface ContentTypeHeader extends MsrpHeader {
 
-	public static final String key = MsrpHeader.HEADER_TYPE.ContentType.getKey();
+	public static final String key = "Content-Type";
 
 	public String getContentType();
 

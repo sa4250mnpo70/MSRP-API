@@ -15,6 +15,12 @@ import se.lbroman.msrp.Encodable;
  */
 public interface MsrpHeader extends Encodable<String> {
 
+    /**
+     * This is of course a rather silly way of duplicating class information
+     * 
+     * @author Leonard Broman
+     */
+    @Deprecated
 	public enum HEADER_TYPE {
 		AuthenticationInfo("Authentication-Info: "), Authorization(
 				"Authorization: "), ByteRange("Byte-Range: "), ContentType(
@@ -71,7 +77,5 @@ public interface MsrpHeader extends Encodable<String> {
 	 * @return a copy
 	 */
 	public MsrpHeader clone() throws UnsupportedOperationException;
-
-	public HEADER_TYPE getType();
 
 }

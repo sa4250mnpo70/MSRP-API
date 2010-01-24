@@ -1,6 +1,8 @@
 package se.lbroman.msrp.impl.data.header;
 
 import se.lbroman.msrp.data.header.SuccessReportHeader;
+import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
+import se.lbroman.msrp.impl.parser.HeaderVisitor;
 
 
 /**
@@ -41,8 +43,7 @@ public class SuccessReportHeaderImpl extends MsrpHeaderImpl implements
 	}
 
 	@Override
-	public HEADER_TYPE getType() {
-		return HEADER_TYPE.SuccessReport;
-	}
-
+    public void accept(HeaderVisitor v) throws HeaderParseErrorException {
+        v.visit(this);
+    }
 }

@@ -9,6 +9,7 @@ import org.apache.commons.logging.LogFactory;
 
 import se.lbroman.msrp.data.header.AuthenticationInfoHeader;
 import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
+import se.lbroman.msrp.impl.parser.HeaderVisitor;
 
 
 /**
@@ -67,9 +68,9 @@ public class AuthenticationInfoHeaderImpl extends MsrpHeaderImpl implements
 		return null;
 	}
 
-	@Override
-	public HEADER_TYPE getType() {
-		return HEADER_TYPE.AuthenticationInfo;
-	}
+    @Override
+    public void accept(HeaderVisitor v) throws HeaderParseErrorException {
+        v.visit(this);
+    }
 
 }

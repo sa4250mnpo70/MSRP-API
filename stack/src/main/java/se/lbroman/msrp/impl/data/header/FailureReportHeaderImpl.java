@@ -6,6 +6,7 @@ import org.apache.commons.logging.LogFactory;
 
 import se.lbroman.msrp.data.header.FailureReportHeader;
 import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
+import se.lbroman.msrp.impl.parser.HeaderVisitor;
 
 
 /**
@@ -73,7 +74,7 @@ public class FailureReportHeaderImpl extends MsrpHeaderImpl implements
 	}
 
 	@Override
-	public HEADER_TYPE getType() {
-		return HEADER_TYPE.FailureReport;
-	}
+    public void accept(HeaderVisitor v) throws HeaderParseErrorException {
+        v.visit(this);
+    }
 }

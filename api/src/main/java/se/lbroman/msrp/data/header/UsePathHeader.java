@@ -27,7 +27,7 @@ import se.lbroman.msrp.data.MsrpURI;
  */
 public interface UsePathHeader extends PathHeader {
 
-	public final static String key = MsrpHeader.HEADER_TYPE.UsePath.getKey();
+	public final static String key = "Use-Path";
 
 	/**
 	 * Get the point where the UE should send its requests.

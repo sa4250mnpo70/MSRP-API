@@ -6,6 +6,7 @@ import org.apache.commons.logging.LogFactory;
 
 import se.lbroman.msrp.data.header.StatusHeader;
 import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
+import se.lbroman.msrp.impl.parser.HeaderVisitor;
 
 
 /**
@@ -102,10 +103,9 @@ public class StatusHeaderImpl extends MsrpHeaderImpl implements StatusHeader {
 	public String getComment() {
 		return comment;
 	}
-
 	@Override
-	public HEADER_TYPE getType() {
-		return HEADER_TYPE.Status;
-	}
+    public void accept(HeaderVisitor v) throws HeaderParseErrorException {
+        v.visit(this);
+    }
 
 }

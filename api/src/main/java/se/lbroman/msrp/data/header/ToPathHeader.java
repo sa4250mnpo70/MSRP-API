@@ -12,7 +12,7 @@ import se.lbroman.msrp.data.MsrpURI;
  */
 public interface ToPathHeader extends PathHeader {
 
-	public final static String key = MsrpHeader.HEADER_TYPE.ToPath.getKey();
+	public final static String key = "To-Path";
 
 	public MsrpURI getDestination();
 

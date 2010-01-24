@@ -15,6 +15,7 @@ import se.lbroman.msrp.impl.data.Pair;
 import se.lbroman.msrp.impl.data.Parameter;
 import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
 import se.lbroman.msrp.impl.parser.DefaultParamsParser;
+import se.lbroman.msrp.impl.parser.HeaderVisitor;
 import se.lbroman.msrp.impl.parser.ParamsParser;
 
 
@@ -265,13 +266,13 @@ public class WWWAuthenticateHeaderImpl extends MsrpHeaderImpl implements
 		return Boolean.parseBoolean(params.get(PARAMETER.stale));
 	}
 
-	@Override
-	public HEADER_TYPE getType() {
-		return HEADER_TYPE.WWWAuthenticate;
-	}
-
 	public String getAlgorithm() {
 		return params.get(PARAMETER.algorithm);
 	}
+	
+	@Override
+    public void accept(HeaderVisitor v) throws HeaderParseErrorException {
+        v.visit(this);
+    }
 
 }

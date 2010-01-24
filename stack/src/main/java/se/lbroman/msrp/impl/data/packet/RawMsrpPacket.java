@@ -10,12 +10,15 @@ import java.util.LinkedList;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import se.lbroman.msrp.data.header.ContentTypeHeader;
 import se.lbroman.msrp.data.header.MsrpHeader.HEADER_TYPE;
 import se.lbroman.msrp.data.packet.MsrpPacket.PACKET_TYPE;
 import se.lbroman.msrp.impl.data.ByteArrays;
 import se.lbroman.msrp.impl.data.ByteUtils;
 import se.lbroman.msrp.impl.data.header.RawMsrpHeader;
 import se.lbroman.msrp.impl.exception.ParseErrorException;
+import se.lbroman.msrp.impl.parser.HeaderParser;
+import se.lbroman.msrp.impl.parser.HeaderParserImpl;
 
 /**
  * This packet parses a raw byte array containing one transaction into an MSRP
@@ -36,6 +39,7 @@ public class RawMsrpPacket {
 	private byte[] packet;
 	private int pos = 0;
 	ByteUtils byteUtils = new ByteArrays();
+	HeaderParser headerParser = new HeaderParserImpl();
 
 	public RawMsrpPacket(byte[] packet) throws ParseErrorException {
 		this.packet = packet;
@@ -56,17 +60,17 @@ public class RawMsrpPacket {
 		// We ignore the comment
 		if (type == PACKET_TYPE.SEND) {
 			// Here be content
-			RawMsrpHeader h;
+			RawMsrpHeader<?> h;
 			do {
 				try {
-					h = new RawMsrpHeader(new String(getLine()));
+					h = headerParser.createRawHeader(new String(getLine()));
 				} catch (ParseErrorException e) {
 					e.printStackTrace();
 					throw new ParseErrorException(e);
 				}
 				headers.add(h);
 				// The last header must be Content-Type:
-			} while (!(h.getType() == HEADER_TYPE.ContentType));
+			} while (!(h.getKey().equals(ContentTypeHeader.key)));
 			// We can now calculate where the content is
 			// CRLF data CRLF ------- id ? CRLF
 			// TODO MIME header treatment
@@ -75,9 +79,9 @@ public class RawMsrpPacket {
 			byteUtils
 					.copySubRange(packet, pos + 2, content, 0, content.length);
 		} else {
-			RawMsrpHeader h;
+			RawMsrpHeader<?> h;
 			do {
-				h = new RawMsrpHeader(new String(getLine()));
+				h = headerParser.createRawHeader(new String(getLine()));
 				headers.add(h);
 			} while (packet[pos] != '-');
 		}

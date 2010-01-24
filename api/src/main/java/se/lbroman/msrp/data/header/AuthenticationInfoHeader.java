@@ -10,6 +10,6 @@ package se.lbroman.msrp.data.header;
  */
 public interface AuthenticationInfoHeader extends MsrpHeader {
 
-	public static final String key = MsrpHeader.HEADER_TYPE.AuthenticationInfo.getKey();
+	public static final String key = "Authentication-Info";
 
 }

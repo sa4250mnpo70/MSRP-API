@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import se.lbroman.msrp.data.MsrpURI;
 import se.lbroman.msrp.data.header.FromPathHeader;
 import se.lbroman.msrp.impl.data.MsrpURIImpl;
+import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
+import se.lbroman.msrp.impl.parser.HeaderVisitor;
 
 
 
@@ -78,7 +80,7 @@ public class FromPathHeaderImpl extends PathHeaderImpl implements
 	}
 
 	@Override
-	public HEADER_TYPE getType() {
-		return HEADER_TYPE.FromPath;
-	}
+    public void accept(HeaderVisitor v) throws HeaderParseErrorException {
+        v.visit(this);
+    }
 }

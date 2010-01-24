@@ -13,6 +13,6 @@ public interface AuthorizationHeader extends MsrpHeader {
 	/**
 	 * Key "Authorization: "
 	 */
-	public static final String key = MsrpHeader.HEADER_TYPE.Authorization.getKey();
+	public static final String key = "Authorization";
 
 }

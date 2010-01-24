@@ -10,5 +10,5 @@ package se.lbroman.msrp.data.header;
  */
 public interface MessageIDHeader extends MsrpHeader {
 
-	public static final String key = MsrpHeader.HEADER_TYPE.MessageID.getKey();
+	public static final String key = "Message-ID";
 }

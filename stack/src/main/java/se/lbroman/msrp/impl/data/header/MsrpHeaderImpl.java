@@ -6,6 +6,7 @@ import org.apache.commons.logging.LogFactory;
 
 import se.lbroman.msrp.data.header.MsrpHeader;
 import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
+import se.lbroman.msrp.impl.parser.HeaderVisitor;
 
 
 /**
@@ -21,8 +22,11 @@ public abstract class MsrpHeaderImpl implements MsrpHeader {
 	private static Log logger = LogFactory.getLog(MsrpHeaderImpl.class);
 
 	protected String value;
+	
+	private RawMsrpHeader<?> rawHeader;
 
-	@Override
+
+    @Override
 	public MsrpHeaderImpl clone() throws UnsupportedOperationException {
 	    throw new UnsupportedOperationException();
 	}
@@ -60,6 +64,15 @@ public abstract class MsrpHeaderImpl implements MsrpHeader {
 	 * @see MsrpHeader#getValue()
 	 */
 	public abstract String getValue();
+	
+
+    public RawMsrpHeader<?> getRawHeader() {
+        return rawHeader;
+    }
+
+    public void setRawHeader(RawMsrpHeader<?> rawHeader) {
+        this.rawHeader = rawHeader;
+    }
 
 	/**
 	 * Encode the Header without the CRLF at the end!
@@ -96,6 +109,6 @@ public abstract class MsrpHeaderImpl implements MsrpHeader {
 		return true;
 	}
 	
-	public abstract HEADER_TYPE getType();
-
+	public abstract void accept(HeaderVisitor v) throws HeaderParseErrorException;
+	
 }

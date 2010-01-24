@@ -63,7 +63,7 @@ public abstract class MsrpPacketImpl implements MsrpPacket,
 	 *            The header to be added
 	 */
 	public void setHeader(MsrpHeaderImpl h) {
-		switch (h.getType()) {
+	/*	switch (h.getType()) {
 		case FromPath:
 			from = (FromPathHeaderImpl) h;
 			break;
@@ -79,7 +79,7 @@ public abstract class MsrpPacketImpl implements MsrpPacket,
 		}
 		if (logger.isTraceEnabled()) {
 			logger.trace(h.getKey() + "header added");
-		}
+		} */
 	}
 
 	@Override
@@ -155,9 +155,9 @@ public abstract class MsrpPacketImpl implements MsrpPacket,
 			return to;
 		} else {
 			for (MsrpHeaderImpl h : extraHeaders) {
-				if (header == h.getType()) {
+	/*			if (header == h.getType()) {
 					return h;
-				}
+				} */
 			}
 		}
 		return null;
@@ -177,7 +177,7 @@ public abstract class MsrpPacketImpl implements MsrpPacket,
 	 */
 	public void parse(RawMsrpPacket rp) {
 		logger.debug("Parsing " + rp.getType() + " packet");
-		for (RawMsrpHeader h : rp.getHeaders()) {
+		for (RawMsrpHeader<?> h : rp.getHeaders()) {
 			try {
 				MsrpHeaderImpl mh = MsrpParser.headerTypes.get(h.getKey())
 						.newInstance();

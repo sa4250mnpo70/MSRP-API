@@ -8,7 +8,7 @@ package se.lbroman.msrp.data.header;
  */
 public interface ByteRangeHeader extends MsrpHeader {
 
-	public static final String key = MsrpHeader.HEADER_TYPE.ByteRange.getKey();
+	public static final String key = "Byte-Range";
 
 	public long getStart();
 

@@ -6,6 +6,7 @@ import org.apache.commons.logging.LogFactory;
 
 import se.lbroman.msrp.data.header.ByteRangeHeader;
 import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
+import se.lbroman.msrp.impl.parser.HeaderVisitor;
 
 
 /**
@@ -56,7 +57,7 @@ public class ByteRangeHeaderImpl extends MsrpHeaderImpl implements
 	public ByteRangeHeaderImpl clone() {
 		return new ByteRangeHeaderImpl(this);
 	}
-
+/*
 	@Override
 	public void parse(String data) throws HeaderParseErrorException {
 		String[] set = data.split(key);
@@ -94,7 +95,7 @@ public class ByteRangeHeaderImpl extends MsrpHeaderImpl implements
 		if (logger.isTraceEnabled()) {
 			logger.trace("Parsed: \"" + data + "\" > \"" + encode() + "\"");
 		}
-	}
+	} */
 
 	/**
 	 * @return the start
@@ -131,6 +132,10 @@ public class ByteRangeHeaderImpl extends MsrpHeaderImpl implements
 	 */
 	public long getTotal() {
 		return total;
+	}
+	
+	public void setTotal(long total) {
+	    this.total = total;
 	}
 
 	@Override
@@ -176,10 +181,8 @@ public class ByteRangeHeaderImpl extends MsrpHeaderImpl implements
 	}
 
 	@Override
-	public HEADER_TYPE getType() {
-		return HEADER_TYPE.ByteRange;
-	}
-	
-	
+    public void accept(HeaderVisitor v) throws HeaderParseErrorException {
+        v.visit(this);
+    }
 
 }

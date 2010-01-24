@@ -9,7 +9,7 @@ package se.lbroman.msrp.data.header;
  */
 public interface WWWAuthenticateHeader extends MsrpHeader {
 
-	public String key =MsrpHeader.HEADER_TYPE.WWWAuthenticate.getKey();
+	public String key = "WWW-Authenticate";
 
 	/**
 	 * Sets the realm parameter

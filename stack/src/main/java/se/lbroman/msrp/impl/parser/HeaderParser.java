@@ -1,5 +1,6 @@
 package se.lbroman.msrp.impl.parser;
 
+import se.lbroman.msrp.impl.data.header.MsrpHeaderImpl;
 import se.lbroman.msrp.impl.data.header.RawMsrpHeader;
 import se.lbroman.msrp.impl.exception.ParseErrorException;
 
@@ -16,6 +17,8 @@ public interface HeaderParser {
      * @return
      * @throws ParseErrorException
      */
-    RawMsrpHeader createRawHeader(String line) throws ParseErrorException;
+    RawMsrpHeader<?> createRawHeader(String line) throws ParseErrorException;
+    
+    MsrpHeaderImpl createHeader(String line) throws ParseErrorException;
 
 }

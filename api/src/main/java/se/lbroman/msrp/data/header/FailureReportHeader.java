@@ -10,6 +10,6 @@ package se.lbroman.msrp.data.header;
  */
 public interface FailureReportHeader extends MsrpHeader {
 
-	public static final String key = MsrpHeader.HEADER_TYPE.FailureReport.getKey();
+	public static final String key = "Failure-Report";
 
 }

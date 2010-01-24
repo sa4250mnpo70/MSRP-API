@@ -4,6 +4,8 @@ import java.util.LinkedList;
 
 import se.lbroman.msrp.data.header.ToPathHeader;
 import se.lbroman.msrp.impl.data.MsrpURIImpl;
+import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
+import se.lbroman.msrp.impl.parser.HeaderVisitor;
 
 
 /**
@@ -53,8 +55,8 @@ public class ToPathHeaderImpl extends PathHeaderImpl implements ToPathHeader {
 	}
 
 	@Override
-	public HEADER_TYPE getType() {
-		return HEADER_TYPE.ToPath;
-	}
-
+    public void accept(HeaderVisitor v) throws HeaderParseErrorException {
+        v.visit(this);
+    }
+	
 }

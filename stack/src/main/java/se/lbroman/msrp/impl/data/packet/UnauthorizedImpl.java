@@ -56,12 +56,12 @@ public class UnauthorizedImpl extends ResponseImpl implements Unauthorized {
 
 	@Override
 	public void setHeader(MsrpHeaderImpl h) {
-		if (h.getType() == HEADER_TYPE.WWWAuthenticate) {
+	/*	if (h.getType() == HEADER_TYPE.WWWAuthenticate) {
 			wwwAuth = (WWWAuthenticateHeaderImpl) h;
 			logger.trace(h.getKey() + "header set");
 		} else {
 			super.setHeader(h);
-		}
+		} */
 
 	}
 

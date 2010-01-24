@@ -1,6 +1,8 @@
 package se.lbroman.msrp.impl.data.header;
 
 import se.lbroman.msrp.data.header.MessageIDHeader;
+import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
+import se.lbroman.msrp.impl.parser.HeaderVisitor;
 
 /**
  * <pre>
@@ -47,10 +49,9 @@ public class MessageIDHeaderImpl extends MsrpHeaderImpl implements
 	public String getKey() {
 		return key;
 	}
-
 	@Override
-	public HEADER_TYPE getType() {
-		return HEADER_TYPE.MessageID;
-	}
+    public void accept(HeaderVisitor v) throws HeaderParseErrorException {
+        v.visit(this);
+    }
 
 }

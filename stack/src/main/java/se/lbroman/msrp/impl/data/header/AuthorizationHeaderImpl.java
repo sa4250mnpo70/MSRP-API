@@ -17,6 +17,7 @@ import se.lbroman.msrp.impl.data.Pair;
 import se.lbroman.msrp.impl.data.Parameter;
 import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
 import se.lbroman.msrp.impl.parser.DefaultParamsParser;
+import se.lbroman.msrp.impl.parser.HeaderVisitor;
 import se.lbroman.msrp.impl.parser.ParamsParser;
 
 /**
@@ -256,10 +257,10 @@ public class AuthorizationHeaderImpl extends MsrpHeaderImpl implements
 		}
 		return b.toString();
 	}
-
+	
 	@Override
-	public HEADER_TYPE getType() {
-		return HEADER_TYPE.Authorization;
-	}
+    public void accept(HeaderVisitor v) throws HeaderParseErrorException {
+        v.visit(this);
+    }
 
 }
