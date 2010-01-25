@@ -22,9 +22,8 @@ import se.lbroman.msrp.impl.parser.HeaderVisitor;
  * 
  */
 public class StatusHeaderImpl extends MsrpHeaderImpl implements StatusHeader {
-	/** Attributes */
 
-	private static Log logger = LogFactory.getLog(StatusHeaderImpl.class);
+	private static final Log logger = LogFactory.getLog(StatusHeaderImpl.class);
 
 	private int namespace = 000;
 
@@ -49,10 +48,16 @@ public class StatusHeaderImpl extends MsrpHeaderImpl implements StatusHeader {
 		this.namespace = orig.namespace;
 		this.code = orig.code;
 		this.comment = orig.comment;
+		if (orig.rawHeader != null) {
+		    this.rawHeader = orig.rawHeader;
+		}
 	}
 
 	@Override
 	public StatusHeaderImpl clone() {
+	    if (logger.isTraceEnabled()) {
+	        logger.trace("Cloning StatusHeader");
+	    }
 		return new StatusHeaderImpl(this);
 	}
 

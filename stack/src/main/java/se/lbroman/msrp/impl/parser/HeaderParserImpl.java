@@ -176,9 +176,8 @@ public class HeaderParserImpl implements HeaderParser, HeaderVisitor {
     }
 
     @Override
-    public void visit(MessageIDHeaderImpl messageIDHeaderImpl) {
-        // TODO Auto-generated method stub
-
+    public void visit(MessageIDHeaderImpl header) {
+        header.setIdent(header.getRawHeader().getContent());
     }
 
     @Override

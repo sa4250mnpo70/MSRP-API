@@ -69,7 +69,8 @@ public abstract class RequestImpl extends MsrpPacketImpl implements Request {
 	 *            the message id to set.
 	 */
 	public void setMessageID(String id) {
-		messageID = new MessageIDHeaderImpl(id);
+		messageID = new MessageIDHeaderImpl();
+		messageID.setIdent(id);
 	}
 
 	/**

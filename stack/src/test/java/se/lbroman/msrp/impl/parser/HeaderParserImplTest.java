@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 
 import se.lbroman.msrp.data.header.ByteRangeHeader;
 import se.lbroman.msrp.data.header.FromPathHeader;
+import se.lbroman.msrp.data.header.MessageIDHeader;
 import se.lbroman.msrp.data.header.StatusHeader;
 import se.lbroman.msrp.impl.data.header.MsrpHeaderImpl;
 import se.lbroman.msrp.impl.data.header.RawMsrpHeader;
@@ -62,6 +63,13 @@ public class HeaderParserImplTest {
         assertEquals(0, h.getNameSpace());
         assertEquals(200, h.getCode());
         assertEquals("OK",h.getComment());
+    }
+    
+    @Test
+    public void parseMessageId() throws ParseErrorException{
+        MsrpHeaderImpl header = parser.createHeader("Message-ID: asdf1234");
+        assertTrue(header instanceof MessageIDHeader);
+        assertEquals("asdf1234",header.getValue());
     }
     
     

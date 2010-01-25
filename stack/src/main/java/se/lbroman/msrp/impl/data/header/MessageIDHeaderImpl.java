@@ -16,22 +16,21 @@ import se.lbroman.msrp.impl.parser.HeaderVisitor;
  */
 public class MessageIDHeaderImpl extends MsrpHeaderImpl implements
 		MessageIDHeader {
-	/** Attributes */
-	// private String value;
-	public MessageIDHeaderImpl() {
+	
+    private String ident = "";
+    
+    public MessageIDHeaderImpl() {
 		super();
-	}
-
-
-	public MessageIDHeaderImpl(String ident) {
-		this.value = ident;
 	}
 
 	/**
 	 * Copy constructor
 	 */
 	public MessageIDHeaderImpl(MessageIDHeaderImpl orig) {
-		this.value = orig.value;
+	    if (rawHeader != null) {
+	        this.rawHeader = orig.rawHeader.clone();
+	    }
+	    ident = orig.ident;
 	}
 
 	@Override
@@ -42,7 +41,11 @@ public class MessageIDHeaderImpl extends MsrpHeaderImpl implements
 
 	@Override
 	public String getValue() {
-		return value;
+		return ident;
+	}
+	
+	public void setIdent(String ident) {
+	    this.ident = ident;
 	}
 
 	@Override

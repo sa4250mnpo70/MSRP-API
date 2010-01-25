@@ -13,7 +13,7 @@ import org.apache.commons.logging.LogFactory;
  * 
  * @see se.lbroman.msrp.impl.parser.HeaderParser
  */
-public class RawMsrpHeader<T extends MsrpHeaderImpl> {
+public class RawMsrpHeader<T extends MsrpHeaderImpl> implements Cloneable {
 
 	private static final Log logger = LogFactory.getLog(RawMsrpHeader.class);
 	private Class<T> type;
@@ -64,6 +64,12 @@ public class RawMsrpHeader<T extends MsrpHeaderImpl> {
         this.content = content2;
     }
 
+    RawMsrpHeader(RawMsrpHeader<T> orig) {
+        this.type = orig.type;
+        this.key = orig.key;
+        this.content = orig.content;
+    }
+
     /**
 	 * @return the key
 	 */
@@ -80,6 +86,11 @@ public class RawMsrpHeader<T extends MsrpHeaderImpl> {
 
 	public Class<T> getType() {
 		return type;
+	}
+	
+	@SuppressWarnings("unchecked")
+    public RawMsrpHeader<T> clone() {
+	    return new RawMsrpHeader(this);
 	}
 
 }
