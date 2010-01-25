@@ -49,7 +49,9 @@ public class MsrpURIImpl implements Encodable<String>, MsrpURI {
 	 * 
 	 * @param URI
 	 * @throws ParseErrorException
-	 */
+	 * @deprecated Use the parser instead!
+     */
+    @Deprecated
 	public MsrpURIImpl(String URI) throws ParseErrorException {
 		parse(URI);
 	}
@@ -104,12 +106,12 @@ public class MsrpURIImpl implements Encodable<String>, MsrpURI {
 	 * @param parameters
 	 */
 	public MsrpURIImpl(String scheme, String userinfo, String host, int port,
-			String sessionID, String transport, List<Parameter> parameters) {
+			String resource, String transport, List<Parameter> parameters) {
 		this.scheme = scheme;
 		this.userinfo = userinfo;
 		this.host = host;
 		this.port = port;
-		this.resource = sessionID;
+		this.resource = resource;
 		this.transport = transport;
 		this.parameters = parameters;
 	}
@@ -158,9 +160,9 @@ public class MsrpURIImpl implements Encodable<String>, MsrpURI {
 	 * </pre>
 	 * 
 	 * @param s
-	 * 
+	 * @deprecated Use the parser instead!
 	 */
-
+	@Deprecated
 	public void parse(String s) throws ParseErrorException {
 		logger.trace("Parsing uri: " + s);
 		String[] set = s.split("://");

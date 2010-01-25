@@ -60,6 +60,13 @@ public class Parameter extends Pair<String, String> implements
 		return new Parameter(this);
 	}
 
+	/**
+	 * 
+	 * @param s
+	 * @return
+	 * @deprecated use the parser
+	 */
+	@Deprecated
 	public static Parameter parse(String s) {
 		String[] set = s.split("=");
 		String key = set[0];
