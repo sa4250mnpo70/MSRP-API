@@ -1,6 +1,7 @@
 package se.lbroman.msrp.impl.parser;
 
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 import se.lbroman.msrp.data.header.ByteRangeHeader;
@@ -33,6 +34,14 @@ public class HeaderParserImplTest {
     @Test
     public void parseByteRangeHeader() throws ParseErrorException {
         MsrpHeaderImpl header = parser.createHeader("Byte-Range: 1-*/*");
+        assertTrue(header instanceof ByteRangeHeader);
+    }
+    
+    @Test
+    public void parseByteRangeAgain() throws ParseErrorException {
+        String data = "Byte-Range: 1-*/2";
+        MsrpHeaderImpl header = parser.createHeader(data);
+        assertEquals(data, header.encode());
         assertTrue(header instanceof ByteRangeHeader);
     }
     

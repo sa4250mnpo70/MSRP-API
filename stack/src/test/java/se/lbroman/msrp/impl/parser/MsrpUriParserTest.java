@@ -29,5 +29,55 @@ public class MsrpUriParserTest {
         }
     }
     
+    @Test
+    public void parseUSER() throws ParseErrorException {
+        MsrpURIImpl uri = parser.createMsrpUri("msrp://user@test.com/;tcp");
+        assertEquals("msrp", uri.getScheme());
+        assertEquals("test.com", uri.getHost());
+        assertEquals(2855, uri.getPort());
+        assertEquals("tcp", uri.getTransport());
+        assertEquals("user", uri.getUserInfo());
+        assertEquals(null, uri.getResource());
+        assertEquals("msrp://user@test.com/;tcp", uri.toString());
+    }
+
+    @Test
+    public void parseRESOURCE() throws ParseErrorException {
+        MsrpURIImpl uri = parser.createMsrpUri("msrp://user@test.com/1234;tcp");
+        assertEquals("msrp", uri.getScheme());
+        assertEquals("test.com", uri.getHost());
+        assertEquals(2855, uri.getPort());
+        assertEquals("tcp", uri.getTransport());
+        assertEquals("user", uri.getUserInfo());
+        assertEquals("1234", uri.getResource());
+        assertEquals("msrp://user@test.com/1234;tcp", uri.toString());
+    }
+
+    @Test
+    public void parseMSRPS() throws ParseErrorException {
+        String text = "msrps://user@test.com/1234;tcp";
+        MsrpURIImpl uri = parser.createMsrpUri(text);
+        assertEquals("msrps", uri.getScheme());
+        assertEquals("test.com", uri.getHost());
+        assertEquals(2855, uri.getPort());
+        assertEquals("tcp", uri.getTransport());
+        assertEquals("user", uri.getUserInfo());
+        assertEquals("1234", uri.getResource());
+        assertEquals(text, uri.toString());
+    }
+
+    @Test
+    public void parsePORT() throws ParseErrorException {
+        String text = "msrp://user@test.com:1234/1234;tcp";
+        MsrpURIImpl uri = parser.createMsrpUri(text);
+        assertEquals("msrp", uri.getScheme());
+        assertEquals("test.com", uri.getHost());
+        assertEquals(1234, uri.getPort());
+        assertEquals("tcp", uri.getTransport());
+        assertEquals("user", uri.getUserInfo());
+        assertEquals("1234", uri.getResource());
+        assertEquals(text, uri.toString());
+    }
+    
     
 }
