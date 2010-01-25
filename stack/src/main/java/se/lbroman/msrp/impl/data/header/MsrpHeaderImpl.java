@@ -21,9 +21,13 @@ public abstract class MsrpHeaderImpl implements MsrpHeader {
 
 	private static Log logger = LogFactory.getLog(MsrpHeaderImpl.class);
 
+	/**
+	 * @deprecated use the value in the raw header instead
+	 */
+	@Deprecated
 	protected String value;
 	
-	private RawMsrpHeader<?> rawHeader;
+	protected RawMsrpHeader<?> rawHeader;
 
 
     @Override
@@ -36,6 +40,7 @@ public abstract class MsrpHeaderImpl implements MsrpHeader {
 	 * @param data
 	 * @throws HeaderParseErrorException
 	 */
+    @Deprecated
 	public void parse(String data) throws HeaderParseErrorException {
 		// String value;
 		String[] set = data.split(getKey());
@@ -101,11 +106,6 @@ public abstract class MsrpHeaderImpl implements MsrpHeader {
 		if (getClass() != obj.getClass())
 			return false;
 		final MsrpHeaderImpl other = (MsrpHeaderImpl) obj;
-		if (value == null) {
-			if (other.value != null)
-				return false;
-		} else if (!value.equals(other.value))
-			return false;
 		return true;
 	}
 	

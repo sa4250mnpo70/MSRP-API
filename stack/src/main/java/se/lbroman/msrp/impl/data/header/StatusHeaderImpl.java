@@ -57,22 +57,6 @@ public class StatusHeaderImpl extends MsrpHeaderImpl implements StatusHeader {
 	}
 
 	@Override
-	public void parse(String data) throws HeaderParseErrorException {
-		super.parse(data);
-		String[] set = value.split(" ", 3);
-		code = Integer.parseInt(set[1]);
-		if (set.length > 2) {
-			comment = set[2];
-			comment = comment.trim();
-		} else {
-			comment = "";
-		}
-		if (logger.isTraceEnabled()) {
-			logger.trace("Parsed \"" + data + "\" > \"" + encode() + "\"");
-		}
-	}
-
-	@Override
 	public String getKey() {
 		return key;
 	}
@@ -106,6 +90,14 @@ public class StatusHeaderImpl extends MsrpHeaderImpl implements StatusHeader {
 	@Override
     public void accept(HeaderVisitor v) throws HeaderParseErrorException {
         v.visit(this);
+    }
+
+    public void setCode(int code2) {
+        this.code = code2;
+    }
+
+    public void setComment(String comment2) {
+        this.comment = comment2;
     }
 
 }

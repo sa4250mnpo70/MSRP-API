@@ -157,9 +157,22 @@ public class HeaderParserImpl implements HeaderParser, HeaderVisitor {
     }
 
     @Override
-    public void visit(StatusHeaderImpl statusHeaderImpl) {
-        // TODO Auto-generated method stub
-
+    public void visit(StatusHeaderImpl header) {
+        String value = header.getRawHeader().getContent();
+        String[] set = value.split(" ", 3);
+        int code = Integer.parseInt(set[1]);
+        String comment;
+        if (set.length > 2) {
+            comment = set[2];
+            comment = comment.trim();
+        } else {
+            comment = "";
+        }
+        header.setCode(code);
+        header.setComment(comment);
+        if (logger.isTraceEnabled()) {
+            logger.trace("Parsed \"" + value + "\" > \"" + header.encode() + "\"");
+        }
     }
 
     @Override
