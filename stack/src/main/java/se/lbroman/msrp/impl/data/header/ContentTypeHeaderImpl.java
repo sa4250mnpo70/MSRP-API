@@ -68,6 +68,7 @@ public class ContentTypeHeaderImpl extends MsrpHeaderImpl implements
 	}
 
 	@Override
+	@Deprecated
 	public void parse(String data) throws HeaderParseErrorException {
 		String[] set = data.split(key);
 		if (set.length != 2) {
@@ -168,6 +169,18 @@ public class ContentTypeHeaderImpl extends MsrpHeaderImpl implements
 	@Override
     public void accept(HeaderVisitor v) throws HeaderParseErrorException {
         v.visit(this);
+    }
+
+    public void setType(String type2) {
+        this.type = type2;
+    }
+
+    public void setSubType(String subType2) {
+        this.subType = subType2;
+    }
+
+    public void setParameters(List<Parameter> params2) {
+        this.params = params2;
     }
 
 }

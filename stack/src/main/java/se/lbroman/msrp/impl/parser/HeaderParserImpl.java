@@ -3,6 +3,8 @@
  */
 package se.lbroman.msrp.impl.parser;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -21,6 +23,7 @@ import se.lbroman.msrp.data.header.SuccessReportHeader;
 import se.lbroman.msrp.data.header.ToPathHeader;
 import se.lbroman.msrp.data.header.UsePathHeader;
 import se.lbroman.msrp.data.header.WWWAuthenticateHeader;
+import se.lbroman.msrp.impl.data.Parameter;
 import se.lbroman.msrp.impl.data.header.AuthenticationInfoHeaderImpl;
 import se.lbroman.msrp.impl.data.header.AuthorizationHeaderImpl;
 import se.lbroman.msrp.impl.data.header.ByteRangeHeaderImpl;
@@ -193,9 +196,32 @@ public class HeaderParserImpl implements HeaderParser, HeaderVisitor {
     }
 
     @Override
-    public void visit(ContentTypeHeaderImpl contentTypeHeaderImpl) {
-        // TODO Auto-generated method stub
-
+    public void visit(ContentTypeHeaderImpl header) {
+        String data = header.getRawHeader().getContent();
+        String[] set = data.split("/");
+        String type = set[0];
+        List<Parameter> params = new ArrayList<Parameter>();
+        String subType;
+        if (set[1].contains(";")) {
+            set = set[1].split(";");
+            subType = set[0];
+            for (int i = 1; i < set.length; i++) {
+                String[] set2 = set[i].split("=");
+                if (set2.length == 1) {
+                    params.add(new Parameter(set2[0]));
+                } else {
+                    params.add(new Parameter(set2[0], set2[1]));
+                }
+            }
+        } else {
+            subType = set[1];
+        }
+        header.setType(type);
+        header.setSubType(subType);
+        header.setParameters(params);
+        if (logger.isTraceEnabled()) {
+            logger.trace("Parsed: \"" + data + "\" > \"" + header.encode() + "\"");
+        }
     }
 
     @Override

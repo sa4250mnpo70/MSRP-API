@@ -1,9 +1,5 @@
 package se.lbroman.msrp.impl.data.header;
 
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import se.lbroman.msrp.data.header.ByteRangeHeader;
 import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
 import se.lbroman.msrp.impl.parser.HeaderVisitor;
@@ -24,8 +20,6 @@ import se.lbroman.msrp.impl.parser.HeaderVisitor;
 public class ByteRangeHeaderImpl extends MsrpHeaderImpl implements
 		ByteRangeHeader {
 	
-	private static Log logger = LogFactory.getLog(ByteRangeHeaderImpl.class);
-
 	private long start;
 
 	private long end;
@@ -57,45 +51,6 @@ public class ByteRangeHeaderImpl extends MsrpHeaderImpl implements
 	public ByteRangeHeaderImpl clone() {
 		return new ByteRangeHeaderImpl(this);
 	}
-/*
-	@Override
-	public void parse(String data) throws HeaderParseErrorException {
-		String[] set = data.split(key);
-		if (set.length != 2)
-			throw new HeaderParseErrorException("Malformed ByteRangeHeader");
-		set = set[1].split("-");
-		if (set.length != 2)
-			throw new HeaderParseErrorException("Malformed ByteRangeHeader");
-		try {
-			start = Integer.parseInt(set[0]);
-		} catch (NumberFormatException e) {
-			throw new HeaderParseErrorException(
-					"Malformed ByteRangeHeader, start value malformed");
-		}
-		set = set[1].split("/");
-		if (set.length != 2)
-			throw new HeaderParseErrorException("Malformed ByteRangeHeader");
-		try {
-			if (set[0].equals("*")) {
-				end = -1;
-			} else {
-				end = Integer.parseInt(set[0]);
-			}
-		} catch (NumberFormatException e) {
-//			logger.error(e);
-			throw new HeaderParseErrorException(
-					"Malformed ByteRangeHeader. Expected <integer> or * got: " +end);
-		}
-		try {
-			total = Integer.parseInt(set[1]);
-		} catch (NumberFormatException e) {
-			throw new HeaderParseErrorException(
-					"Malformed ByteRangeHeader, total value malformed");
-		}
-		if (logger.isTraceEnabled()) {
-			logger.trace("Parsed: \"" + data + "\" > \"" + encode() + "\"");
-		}
-	} */
 
 	/**
 	 * @return the start
