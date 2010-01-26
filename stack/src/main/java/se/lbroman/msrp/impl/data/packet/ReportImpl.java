@@ -79,11 +79,8 @@ public class ReportImpl extends RequestImpl implements Report {
 				// it is because the header doesnt have a nullary constructor
 				MsrpHeaderImpl mh = MsrpParser.headerTypes.get(h.getKey())
 						.newInstance();
-				mh.parse(h.getKey() + h.getContent());
+			//	mh.parse(h.getKey() + h.getContent());
 				setHeader(mh);
-			} catch (HeaderParseErrorException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 				logger.error("The header " + h.getKey()

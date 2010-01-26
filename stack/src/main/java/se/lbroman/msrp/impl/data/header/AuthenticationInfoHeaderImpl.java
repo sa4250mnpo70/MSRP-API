@@ -52,7 +52,7 @@ public class AuthenticationInfoHeaderImpl extends MsrpHeaderImpl implements
 		return null;
 	}
 
-	@Override
+	@Deprecated
 	public void parse(String data) throws HeaderParseErrorException {
 		throw new HeaderParseErrorException(
 				"Authentication-Info not implemented");

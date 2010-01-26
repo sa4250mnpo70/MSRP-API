@@ -4,9 +4,12 @@
 package se.lbroman.msrp.impl.parser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,6 +26,7 @@ import se.lbroman.msrp.data.header.SuccessReportHeader;
 import se.lbroman.msrp.data.header.ToPathHeader;
 import se.lbroman.msrp.data.header.UsePathHeader;
 import se.lbroman.msrp.data.header.WWWAuthenticateHeader;
+import se.lbroman.msrp.impl.data.MsrpURIImpl;
 import se.lbroman.msrp.impl.data.Parameter;
 import se.lbroman.msrp.impl.data.header.AuthenticationInfoHeaderImpl;
 import se.lbroman.msrp.impl.data.header.AuthorizationHeaderImpl;
@@ -32,6 +36,7 @@ import se.lbroman.msrp.impl.data.header.FailureReportHeaderImpl;
 import se.lbroman.msrp.impl.data.header.FromPathHeaderImpl;
 import se.lbroman.msrp.impl.data.header.MessageIDHeaderImpl;
 import se.lbroman.msrp.impl.data.header.MsrpHeaderImpl;
+import se.lbroman.msrp.impl.data.header.PathHeaderImpl;
 import se.lbroman.msrp.impl.data.header.RawMsrpHeader;
 import se.lbroman.msrp.impl.data.header.StatusHeaderImpl;
 import se.lbroman.msrp.impl.data.header.SuccessReportHeaderImpl;
@@ -48,6 +53,8 @@ import se.lbroman.msrp.impl.exception.ParseErrorException;
 public class HeaderParserImpl implements HeaderParser, HeaderVisitor {
 
     private static Log logger = LogFactory.getLog(HeaderParserImpl.class);
+
+    UriParser uriParser = new MsrpUriParser();
 
     private Map<String, Class<?>> keys = new TreeMap<String, Class<?>>();
 
@@ -142,15 +149,23 @@ public class HeaderParserImpl implements HeaderParser, HeaderVisitor {
     }
 
     @Override
-    public void visit(UsePathHeaderImpl usePathHeaderImpl) {
-        // TODO Auto-generated method stub
-
+    public void visit(UsePathHeaderImpl header) throws ParseErrorException {
+        parsePathHeader(header);
     }
 
     @Override
-    public void visit(ToPathHeaderImpl toPathHeaderImpl) {
-        // TODO Auto-generated method stub
-
+    public void visit(ToPathHeaderImpl header) throws ParseErrorException {
+        parsePathHeader(header);
+    }
+    
+    void parsePathHeader(PathHeaderImpl header) throws ParseErrorException {
+        String data = header.getRawHeader().getContent();
+        List<MsrpURIImpl> res = uriParser.createMsrpUriList(data);
+        LinkedList<MsrpURIImpl> legs = new LinkedList<MsrpURIImpl>();
+        for ( MsrpURIImpl uri : res) {
+            legs.add(uri);
+        }
+        header.setURIList(legs);
     }
 
     @Override
@@ -184,9 +199,8 @@ public class HeaderParserImpl implements HeaderParser, HeaderVisitor {
     }
 
     @Override
-    public void visit(FromPathHeaderImpl fromPathHeaderImpl) {
-        // TODO Auto-generated method stub
-
+    public void visit(FromPathHeaderImpl header) throws ParseErrorException {
+        parsePathHeader(header);
     }
 
     @Override
@@ -273,5 +287,7 @@ public class HeaderParserImpl implements HeaderParser, HeaderVisitor {
         // TODO Auto-generated method stub
 
     }
+
+    
 
 }

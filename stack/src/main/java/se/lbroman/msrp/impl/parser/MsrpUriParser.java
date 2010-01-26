@@ -1,14 +1,17 @@
 package se.lbroman.msrp.impl.parser;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import se.lbroman.msrp.exception.ParseErrorException;
 import se.lbroman.msrp.impl.data.MsrpURIImpl;
 import se.lbroman.msrp.impl.data.Parameter;
+import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
+import se.lbroman.msrp.impl.exception.ParseErrorException;
 
 public class MsrpUriParser implements UriParser {
 
@@ -69,6 +72,22 @@ public class MsrpUriParser implements UriParser {
         // transport, p);
         MsrpURIImpl result = new MsrpURIImpl(scheme, userinfo, host, port, resource, transport, parameters);
         return result;
+    }
+    
+    @Override
+    public List<MsrpURIImpl> createMsrpUriList(String data) throws ParseErrorException {
+        LinkedList<MsrpURIImpl> URIList = new LinkedList<MsrpURIImpl>();
+        String[] set = data.split(" ");
+        Vector<String> v = new Vector<String>(Arrays.asList(set));
+        for (String s : v) {
+            try {
+                URIList.add(createMsrpUri(s));
+            } catch (ParseErrorException e) {
+                logger.error(e);
+                throw new HeaderParseErrorException(e.getMessage());
+            }
+        }
+        return URIList;
     }
 
 }

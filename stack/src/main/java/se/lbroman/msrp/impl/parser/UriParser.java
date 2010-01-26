@@ -1,7 +1,9 @@
 package se.lbroman.msrp.impl.parser;
 
-import se.lbroman.msrp.exception.ParseErrorException;
+import java.util.List;
+
 import se.lbroman.msrp.impl.data.MsrpURIImpl;
+import se.lbroman.msrp.impl.exception.ParseErrorException;
 
 public interface UriParser {
     
@@ -18,5 +20,7 @@ public interface UriParser {
     * </pre>
     */
     MsrpURIImpl createMsrpUri(String data) throws ParseErrorException;
+
+    List<MsrpURIImpl> createMsrpUriList(String data) throws ParseErrorException;
 
 }

@@ -1,10 +1,12 @@
 package se.lbroman.msrp.impl.data.header;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import se.lbroman.msrp.data.header.ToPathHeader;
 import se.lbroman.msrp.impl.data.MsrpURIImpl;
 import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
+import se.lbroman.msrp.impl.exception.ParseErrorException;
 import se.lbroman.msrp.impl.parser.HeaderVisitor;
 
 
@@ -20,7 +22,7 @@ public class ToPathHeaderImpl extends PathHeaderImpl implements ToPathHeader {
 		super();
 	}
 
-	public ToPathHeaderImpl(LinkedList<MsrpURIImpl> list) {
+	public ToPathHeaderImpl(List<MsrpURIImpl> list) {
 		super(list);
 	}
 
@@ -55,7 +57,7 @@ public class ToPathHeaderImpl extends PathHeaderImpl implements ToPathHeader {
 	}
 
 	@Override
-    public void accept(HeaderVisitor v) throws HeaderParseErrorException {
+    public void accept(HeaderVisitor v) throws ParseErrorException   {
         v.visit(this);
     }
 	

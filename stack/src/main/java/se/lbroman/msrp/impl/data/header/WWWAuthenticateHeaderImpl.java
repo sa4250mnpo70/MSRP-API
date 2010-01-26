@@ -175,7 +175,7 @@ public class WWWAuthenticateHeaderImpl extends MsrpHeaderImpl implements
 		return getKey() + getValue();
 	}
 
-	@Override
+	@Deprecated
 	public void parse(String data) throws HeaderParseErrorException {
 		// Remove and check the key
 		String[] vals = data.split(getKey(), 2);

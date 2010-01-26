@@ -6,6 +6,7 @@ import se.lbroman.msrp.data.MsrpURI;
 import se.lbroman.msrp.data.header.FromPathHeader;
 import se.lbroman.msrp.impl.data.MsrpURIImpl;
 import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
+import se.lbroman.msrp.impl.exception.ParseErrorException;
 import se.lbroman.msrp.impl.parser.HeaderVisitor;
 
 
@@ -80,7 +81,7 @@ public class FromPathHeaderImpl extends PathHeaderImpl implements
 	}
 
 	@Override
-    public void accept(HeaderVisitor v) throws HeaderParseErrorException {
+    public void accept(HeaderVisitor v) throws ParseErrorException {
         v.visit(this);
     }
 }

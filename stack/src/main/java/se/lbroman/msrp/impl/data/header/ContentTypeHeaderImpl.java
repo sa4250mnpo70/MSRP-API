@@ -68,36 +68,6 @@ public class ContentTypeHeaderImpl extends MsrpHeaderImpl implements
 	}
 
 	@Override
-	@Deprecated
-	public void parse(String data) throws HeaderParseErrorException {
-		String[] set = data.split(key);
-		if (set.length != 2) {
-			throw new HeaderParseErrorException("Malformed ContentTypeHeader");
-		}
-		set = set[1].split("/");
-		type = set[0];
-		if (set[1].contains(";")) {
-			set = set[1].split(";");
-			subType = set[0];
-			for (int i = 1; i < set.length; i++) {
-				String[] set2 = set[i].split("=");
-				if (set2.length == 1) {
-					params.add(new Parameter(set2[0]));
-				} else {
-					params.add(new Parameter(set2[0], set2[1]));
-				}
-			}
-		} else {
-			subType = set[1];
-		}
-		// logger.trace("Parsed " + getKey() + getValue());
-		// return new ContentTypeHeader(type, subType);
-		if (logger.isTraceEnabled()) {
-			logger.trace("Parsed: \"" + data + "\" > \"" + encode() + "\"");
-		}
-	}
-
-	@Override
 	public String getValue() {
 		String code = new String();
 		code += type + "/" + subType;

@@ -124,10 +124,8 @@ public abstract class RequestImpl extends MsrpPacketImpl implements Request {
 			try {
 				MsrpHeaderImpl mh = MsrpParser.headerTypes.get(h.getKey())
 						.newInstance();
-				mh.parse(h.getKey() + h.getContent());
+				//mh.parse(h.getKey() + h.getContent());
 				setHeader(mh);
-			} catch (HeaderParseErrorException e) {
-				e.printStackTrace();
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 				logger.error("The header " + h.getKey()

@@ -3,17 +3,14 @@
  */
 package se.lbroman.msrp.impl.data.header;
 
-import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.Vector;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import se.lbroman.msrp.data.header.PathHeader;
-import se.lbroman.msrp.exception.ParseErrorException;
 import se.lbroman.msrp.impl.data.MsrpURIImpl;
-import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
 
 /**
  * @author Leonard Broman
@@ -26,7 +23,7 @@ public abstract class PathHeaderImpl extends MsrpHeaderImpl implements
 
 	protected LinkedList<MsrpURIImpl> URIList = new LinkedList<MsrpURIImpl>();;
 
-	protected PathHeaderImpl(LinkedList<MsrpURIImpl> list) {
+	protected PathHeaderImpl(List<MsrpURIImpl> list) {
 		for (MsrpURIImpl u : list) {
 			URIList.add(u.clone());
 		}
@@ -50,24 +47,12 @@ public abstract class PathHeaderImpl extends MsrpHeaderImpl implements
 	public PathHeaderImpl() {
 	}
 
-	protected static LinkedList<MsrpURIImpl> parseUriList(String data)
-			throws HeaderParseErrorException {
-		LinkedList<MsrpURIImpl> URIList = new LinkedList<MsrpURIImpl>();
-		String[] set = data.split(" ");
-		Vector<String> v = new Vector<String>(Arrays.asList(set));
-		for (String s : v) {
-			try {
-				URIList.add(new MsrpURIImpl(s));
-			} catch (ParseErrorException e) {
-				logger.error(e);
-				throw new HeaderParseErrorException(e.getMessage());
-			}
-		}
+	public List<MsrpURIImpl> getURIList() {
 		return URIList;
 	}
-
-	public LinkedList<MsrpURIImpl> getURIList() {
-		return URIList;
+	
+	public void setURIList(LinkedList<MsrpURIImpl> uriList) {
+	    this.URIList = uriList;
 	}
 
 	/**
@@ -95,11 +80,6 @@ public abstract class PathHeaderImpl extends MsrpHeaderImpl implements
 	}
 
 	@Override
-	public String encode() {
-		return getKey() + getValue();
-	}
-
-	@Override
 	public String getValue() {
 		String code = new String();
 		for (MsrpURIImpl uri : URIList) {
@@ -111,18 +91,6 @@ public abstract class PathHeaderImpl extends MsrpHeaderImpl implements
 
 	@Override
 	public abstract String getKey();
-
-	@Override
-	public void parse(String data) throws HeaderParseErrorException {
-		String[] set = data.split(getKey());
-		if (set.length != 2)
-			throw new HeaderParseErrorException("Malformed " + getKey()
-					+ " header");
-		URIList = parseUriList(set[1]);
-		if (logger.isTraceEnabled()) {
-			logger.trace("Parsed: \"" + data + "\" > \"" + encode() + "\"");
-		}
-	}
 
 	@Override
 	public boolean equals(Object obj) {

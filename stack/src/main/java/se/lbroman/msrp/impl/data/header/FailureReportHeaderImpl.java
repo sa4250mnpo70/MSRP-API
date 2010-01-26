@@ -45,14 +45,13 @@ public class FailureReportHeaderImpl extends MsrpHeaderImpl implements
 		return new FailureReportHeaderImpl(this);
 	}
 
-	@Override
+	
 	public void parse(String data) throws HeaderParseErrorException {
 		// String value;
 		// String[] set = data.split(key);
 		// if (set.length != 2) {
 		// throw new HeaderParseErrorException("Malformed FailureReportHeader");
 		// }
-		super.parse(data);
 		if (value.equals("yes") || value.equals("no")
 				|| value.equals("partial")) {
 			// value = set[1];

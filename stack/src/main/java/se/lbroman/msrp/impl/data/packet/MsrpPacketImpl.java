@@ -181,12 +181,9 @@ public abstract class MsrpPacketImpl implements MsrpPacket,
 			try {
 				MsrpHeaderImpl mh = MsrpParser.headerTypes.get(h.getKey())
 						.newInstance();
-				mh.parse(h.getKey() + h.getContent());
+				//mh.parse(h.getKey() + h.getContent());
 				setHeader(mh);
-			} catch (HeaderParseErrorException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InstantiationException e) {
+			}  catch (InstantiationException e) {
 				e.printStackTrace();
 				logger.error("The header " + h.getKey()
 						+ " has no nullary constructor defined!");

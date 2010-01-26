@@ -183,25 +183,8 @@ public class AuthorizationHeaderImpl extends MsrpHeaderImpl implements
 		return DigestUtils.md5(builder.getBytes());
 	}
 
-	// /**
-	// * Generates an Auth packet from an Unauthorized challenge response.
-	// *
-	// * UNIMPLEMENTED!!!
-	// *
-	// * @param packet
-	// * @param username
-	// * @param secret
-	// * @return a digested header
-	// *
-	// * @deprecated
-	// */
-	// @Deprecated
-	// public static AuthImpl digest(UnauthorizedImpl packet, String username,
-	// String secret) {
-	// return null;
-	// }
 
-	@Override
+	@Deprecated
 	public void parse(String data) throws HeaderParseErrorException {
 		String[] vals = data.split(getKey(), 2);
 		if (vals.length != 2) {

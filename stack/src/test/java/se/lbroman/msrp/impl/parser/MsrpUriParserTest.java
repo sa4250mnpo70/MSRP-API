@@ -3,8 +3,8 @@ package se.lbroman.msrp.impl.parser;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import se.lbroman.msrp.exception.ParseErrorException;
 import se.lbroman.msrp.impl.data.MsrpURIImpl;
+import se.lbroman.msrp.impl.exception.ParseErrorException;
 
 public class MsrpUriParserTest {
 

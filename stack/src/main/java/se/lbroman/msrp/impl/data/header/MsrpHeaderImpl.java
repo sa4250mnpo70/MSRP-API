@@ -6,6 +6,7 @@ import org.apache.commons.logging.LogFactory;
 
 import se.lbroman.msrp.data.header.MsrpHeader;
 import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
+import se.lbroman.msrp.impl.exception.ParseErrorException;
 import se.lbroman.msrp.impl.parser.HeaderVisitor;
 
 
@@ -33,25 +34,6 @@ public abstract class MsrpHeaderImpl implements MsrpHeader {
     @Override
 	public MsrpHeaderImpl clone() throws UnsupportedOperationException {
 	    throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param data
-	 * @throws HeaderParseErrorException
-	 */
-    @Deprecated
-	public void parse(String data) throws HeaderParseErrorException {
-		// String value;
-		String[] set = data.split(getKey());
-		if (set.length != 2) {
-			throw new HeaderParseErrorException("Malformed " + getKey()
-					+ " header");
-		}
-		value = set[1];
-		if (logger.isTraceEnabled()) {
-			logger.trace("Parsed: \"" + data + "\" > \"" + encode() + "\"");
-		}
 	}
 
 	/**
@@ -109,6 +91,6 @@ public abstract class MsrpHeaderImpl implements MsrpHeader {
 		return true;
 	}
 	
-	public abstract void accept(HeaderVisitor v) throws HeaderParseErrorException;
+	public abstract void accept(HeaderVisitor v) throws HeaderParseErrorException, ParseErrorException;
 	
 }

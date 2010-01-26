@@ -13,14 +13,15 @@ import se.lbroman.msrp.impl.data.header.ToPathHeaderImpl;
 import se.lbroman.msrp.impl.data.header.UsePathHeaderImpl;
 import se.lbroman.msrp.impl.data.header.WWWAuthenticateHeaderImpl;
 import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
+import se.lbroman.msrp.impl.exception.ParseErrorException;
 
 public interface HeaderVisitor {
 
     void visit(WWWAuthenticateHeaderImpl wwwAuthenticateHeaderImpl) throws HeaderParseErrorException;
 
-    void visit(UsePathHeaderImpl usePathHeaderImpl) throws HeaderParseErrorException;
+    void visit(UsePathHeaderImpl usePathHeaderImpl) throws ParseErrorException;
 
-    void visit(ToPathHeaderImpl toPathHeaderImpl) throws HeaderParseErrorException;
+    void visit(ToPathHeaderImpl toPathHeaderImpl) throws ParseErrorException;
 
     void visit(SuccessReportHeaderImpl successReportHeaderImpl) throws HeaderParseErrorException;
 
@@ -28,7 +29,7 @@ public interface HeaderVisitor {
 
     void visit(MessageIDHeaderImpl messageIDHeaderImpl) throws HeaderParseErrorException;
 
-    void visit(FromPathHeaderImpl fromPathHeaderImpl) throws HeaderParseErrorException;
+    void visit(FromPathHeaderImpl fromPathHeaderImpl) throws ParseErrorException;
 
     void visit(FailureReportHeaderImpl failureReportHeaderImpl) throws HeaderParseErrorException;
 
