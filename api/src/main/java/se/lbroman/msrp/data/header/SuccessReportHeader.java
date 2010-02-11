@@ -3,6 +3,12 @@ package se.lbroman.msrp.data.header;
 
 public interface SuccessReportHeader extends MsrpHeader {
 
-	public final static String key = "Success-Report";
+	final String key = "Success-Report";
+	
+	enum Success {
+	    Yes,No;
+	}
+	
+	Success getResult();
 
 }
