@@ -11,7 +11,6 @@ import se.lbroman.msrp.impl.data.ByteArrayBuilder;
 import se.lbroman.msrp.impl.data.header.MessageIDHeaderImpl;
 import se.lbroman.msrp.impl.data.header.MsrpHeaderImpl;
 import se.lbroman.msrp.impl.data.header.RawMsrpHeader;
-import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
 
 
 /**
@@ -120,7 +119,7 @@ public abstract class RequestImpl extends MsrpPacketImpl implements Request {
 	 */
 	@Override
 	public void parse(RawMsrpPacket rp) {
-		for (RawMsrpHeader h : rp.getHeaders()) {
+		for (RawMsrpHeader<?> h : rp.getHeaders()) {
 			try {
 				MsrpHeaderImpl mh = MsrpParser.headerTypes.get(h.getKey())
 						.newInstance();

@@ -4,13 +4,10 @@
 package se.lbroman.msrp.impl.parser;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.Vector;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -26,6 +23,7 @@ import se.lbroman.msrp.data.header.SuccessReportHeader;
 import se.lbroman.msrp.data.header.ToPathHeader;
 import se.lbroman.msrp.data.header.UsePathHeader;
 import se.lbroman.msrp.data.header.WWWAuthenticateHeader;
+import se.lbroman.msrp.data.header.SuccessReportHeader.Success;
 import se.lbroman.msrp.impl.data.MsrpURIImpl;
 import se.lbroman.msrp.impl.data.Parameter;
 import se.lbroman.msrp.impl.data.header.AuthenticationInfoHeaderImpl;
@@ -157,21 +155,30 @@ public class HeaderParserImpl implements HeaderParser, HeaderVisitor {
     public void visit(ToPathHeaderImpl header) throws ParseErrorException {
         parsePathHeader(header);
     }
-    
+
     void parsePathHeader(PathHeaderImpl header) throws ParseErrorException {
         String data = header.getRawHeader().getContent();
         List<MsrpURIImpl> res = uriParser.createMsrpUriList(data);
         LinkedList<MsrpURIImpl> legs = new LinkedList<MsrpURIImpl>();
-        for ( MsrpURIImpl uri : res) {
+        for (MsrpURIImpl uri : res) {
             legs.add(uri);
         }
         header.setURIList(legs);
     }
 
     @Override
-    public void visit(SuccessReportHeaderImpl successReportHeaderImpl) {
-        // TODO Auto-generated method stub
-
+    public void visit(SuccessReportHeaderImpl header) throws ParseErrorException {
+        String data = header.getRawHeader().getContent();
+        if (data.equals("yes")) {
+            header.setResult(Success.Yes);
+        } else if (data.equals("no")) {
+            header.setResult(Success.No);
+        } else {
+            throw new ParseErrorException("Malformed success-header data:" + data);
+        }
+        if (logger.isDebugEnabled()) {
+            logger.debug("Parsed failure report header: " + header.encode());
+        }
     }
 
     @Override
@@ -204,9 +211,19 @@ public class HeaderParserImpl implements HeaderParser, HeaderVisitor {
     }
 
     @Override
-    public void visit(FailureReportHeaderImpl failureReportHeaderImpl) {
-        // TODO Auto-generated method stub
-
+    public void visit(FailureReportHeaderImpl header) throws ParseErrorException {
+        String data = header.getRawHeader().getContent();
+        if (data.equals("yes")) {
+            header.setResult(FailureReportHeader.Failure.Yes);
+        } else if (data.equals("no")) {
+            header.setResult(FailureReportHeader.Failure.No);
+        } else if (data.equals("partial")) {
+            header.setResult(FailureReportHeader.Failure.Partial);
+        } else
+            throw new ParseErrorException("Malformed FailureReportHeader: " + data);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Parsed failure report header: " + header.encode());
+        }
     }
 
     @Override
@@ -287,7 +304,5 @@ public class HeaderParserImpl implements HeaderParser, HeaderVisitor {
         // TODO Auto-generated method stub
 
     }
-
-    
 
 }

@@ -11,7 +11,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import se.lbroman.msrp.data.header.ContentTypeHeader;
-import se.lbroman.msrp.data.header.MsrpHeader.HEADER_TYPE;
 import se.lbroman.msrp.data.packet.MsrpPacket.PACKET_TYPE;
 import se.lbroman.msrp.impl.data.ByteArrays;
 import se.lbroman.msrp.impl.data.ByteUtils;
@@ -34,7 +33,7 @@ public class RawMsrpPacket {
 	private String transactionID;
 	private byte contFlag;
 
-	private LinkedList<RawMsrpHeader> headers = new LinkedList<RawMsrpHeader>();
+	private LinkedList<RawMsrpHeader<?>> headers = new LinkedList<RawMsrpHeader<?>>();
 	private byte[] content;
 	private byte[] packet;
 	private int pos = 0;
@@ -112,7 +111,7 @@ public class RawMsrpPacket {
 	/**
 	 * @return the headers
 	 */
-	public LinkedList<RawMsrpHeader> getHeaders() {
+	public LinkedList<RawMsrpHeader<?>> getHeaders() {
 		return headers;
 	}
 

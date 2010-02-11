@@ -13,7 +13,6 @@ import se.lbroman.msrp.impl.data.header.MsrpHeaderImpl;
 import se.lbroman.msrp.impl.data.header.RawMsrpHeader;
 import se.lbroman.msrp.impl.data.header.StatusHeaderImpl;
 import se.lbroman.msrp.impl.data.header.ToPathHeaderImpl;
-import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
 
 
 /**
@@ -73,7 +72,7 @@ public class ReportImpl extends RequestImpl implements Report {
 
 	@Override
 	public void parse(RawMsrpPacket rp) {
-		for (RawMsrpHeader h : rp.getHeaders()) {
+		for (RawMsrpHeader<?> h : rp.getHeaders()) {
 			try {
 				// If you get a java.lang.InstantiationException
 				// it is because the header doesnt have a nullary constructor

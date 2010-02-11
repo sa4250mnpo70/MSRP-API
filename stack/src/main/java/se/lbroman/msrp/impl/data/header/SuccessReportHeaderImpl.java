@@ -1,7 +1,7 @@
 package se.lbroman.msrp.impl.data.header;
 
 import se.lbroman.msrp.data.header.SuccessReportHeader;
-import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
+import se.lbroman.msrp.impl.exception.ParseErrorException;
 import se.lbroman.msrp.impl.parser.HeaderVisitor;
 
 
@@ -12,19 +12,15 @@ import se.lbroman.msrp.impl.parser.HeaderVisitor;
  */
 public class SuccessReportHeaderImpl extends MsrpHeaderImpl implements
 		SuccessReportHeader {
-	/** Attributes */
+	
+    private Success result;
 
 	public SuccessReportHeaderImpl() {
 		super();
 	}
 
-	// private String value;
-	public SuccessReportHeaderImpl(String value) {
-		this.value = value;
-	}
-
 	public SuccessReportHeaderImpl(SuccessReportHeaderImpl orig) {
-		this.value = orig.value;
+		this.result = orig.result;
 	}
 
 	@Override
@@ -39,11 +35,24 @@ public class SuccessReportHeaderImpl extends MsrpHeaderImpl implements
 
 	@Override
 	public String getValue() {
-		return value;
+	    switch (result) {
+	        case Yes: return "yes";
+	        case No: return "no";
+	        default: return "";
+	    }
 	}
 
 	@Override
-    public void accept(HeaderVisitor v) throws HeaderParseErrorException {
+    public void accept(HeaderVisitor v) throws ParseErrorException {
         v.visit(this);
+    }
+
+    @Override
+    public Success getResult() {
+        return result;
+    }
+    
+    public void setResult(Success result) {
+        this.result = result;
     }
 }

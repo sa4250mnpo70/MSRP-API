@@ -23,7 +23,7 @@ public interface HeaderVisitor {
 
     void visit(ToPathHeaderImpl toPathHeaderImpl) throws ParseErrorException;
 
-    void visit(SuccessReportHeaderImpl successReportHeaderImpl) throws HeaderParseErrorException;
+    void visit(SuccessReportHeaderImpl successReportHeaderImpl) throws ParseErrorException;
 
     void visit(StatusHeaderImpl statusHeaderImpl) throws HeaderParseErrorException;
 
@@ -31,7 +31,7 @@ public interface HeaderVisitor {
 
     void visit(FromPathHeaderImpl fromPathHeaderImpl) throws ParseErrorException;
 
-    void visit(FailureReportHeaderImpl failureReportHeaderImpl) throws HeaderParseErrorException;
+    void visit(FailureReportHeaderImpl failureReportHeaderImpl) throws ParseErrorException;
 
     void visit(ContentTypeHeaderImpl contentTypeHeaderImpl) throws HeaderParseErrorException;
 

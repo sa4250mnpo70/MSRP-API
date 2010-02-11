@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import se.lbroman.msrp.data.MsrpURI;
 import se.lbroman.msrp.data.header.FromPathHeader;
 import se.lbroman.msrp.impl.data.MsrpURIImpl;
-import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
 import se.lbroman.msrp.impl.exception.ParseErrorException;
 import se.lbroman.msrp.impl.parser.HeaderVisitor;
 

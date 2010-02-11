@@ -14,7 +14,6 @@ import se.lbroman.msrp.impl.data.header.FromPathHeaderImpl;
 import se.lbroman.msrp.impl.data.header.MsrpHeaderImpl;
 import se.lbroman.msrp.impl.data.header.RawMsrpHeader;
 import se.lbroman.msrp.impl.data.header.ToPathHeaderImpl;
-import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
 
 /**
  * 
