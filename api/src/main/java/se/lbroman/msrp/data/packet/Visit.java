@@ -9,6 +9,6 @@ package se.lbroman.msrp.data.packet;
  */
 public interface Visit extends Request {
 
-	public static final PACKET_TYPE type = PACKET_TYPE.VISIT;
+	public static final String type = "VISIT";
 
 }

@@ -1,7 +1,8 @@
 package se.lbroman.msrp.impl.data.header;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import se.lbroman.msrp.data.header.FailureReportHeader;
 import se.lbroman.msrp.impl.exception.ParseErrorException;
@@ -16,7 +17,7 @@ import se.lbroman.msrp.impl.parser.HeaderVisitor;
 
 public class FailureReportHeaderImpl extends MsrpHeaderImpl implements FailureReportHeader {
 
-    private static Log logger = LogFactory.getLog(FailureReportHeaderImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(FailureReportHeaderImpl.class);
 
     private Failure result;
 

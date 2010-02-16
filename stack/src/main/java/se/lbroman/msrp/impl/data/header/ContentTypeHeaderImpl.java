@@ -3,9 +3,8 @@ package se.lbroman.msrp.impl.data.header;
 import java.util.LinkedList;
 import java.util.List;
 
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import se.lbroman.msrp.data.header.ContentTypeHeader;
 import se.lbroman.msrp.impl.data.Parameter;
@@ -32,7 +31,7 @@ import se.lbroman.msrp.impl.parser.HeaderVisitor;
 public class ContentTypeHeaderImpl extends MsrpHeaderImpl implements
 		ContentTypeHeader {
 	/* Attributes */
-	private static Log logger = LogFactory.getLog(ContentTypeHeaderImpl.class);
+	private static Logger logger = LoggerFactory.getLogger(ContentTypeHeaderImpl.class);
 
 	private String type = null;
 	private String subType = null;

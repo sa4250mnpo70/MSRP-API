@@ -3,9 +3,8 @@
  */
 package se.lbroman.msrp.impl.data.header;
 
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import se.lbroman.msrp.data.header.AuthenticationInfoHeader;
 import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
@@ -36,8 +35,8 @@ import se.lbroman.msrp.impl.parser.HeaderVisitor;
 public class AuthenticationInfoHeaderImpl extends MsrpHeaderImpl implements
 		AuthenticationInfoHeader {
 
-	private static Log logger = LogFactory
-			.getLog(AuthenticationInfoHeaderImpl.class);
+	private static Logger logger = LoggerFactory
+			.getLogger(AuthenticationInfoHeaderImpl.class);
 
 	/**
 	 * 

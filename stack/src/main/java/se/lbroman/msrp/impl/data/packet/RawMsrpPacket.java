@@ -6,12 +6,12 @@ package se.lbroman.msrp.impl.data.packet;
 import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import se.lbroman.msrp.data.header.ContentTypeHeader;
-import se.lbroman.msrp.data.packet.MsrpPacket.PACKET_TYPE;
+import se.lbroman.msrp.data.packet.MsrpPacket;
+import se.lbroman.msrp.data.packet.Send;
 import se.lbroman.msrp.impl.data.ByteArrays;
 import se.lbroman.msrp.impl.data.ByteUtils;
 import se.lbroman.msrp.impl.data.header.RawMsrpHeader;
@@ -28,8 +28,8 @@ import se.lbroman.msrp.impl.parser.HeaderParserImpl;
  */
 public class RawMsrpPacket {
 
-	private Log logger = LogFactory.getLog(RawMsrpPacket.class);
-	private PACKET_TYPE type;
+	private Logger logger = LoggerFactory.getLogger(RawMsrpPacket.class);
+	private Class<? extends MsrpPacket> type;
 	private String transactionID;
 	private byte contFlag;
 
@@ -39,7 +39,18 @@ public class RawMsrpPacket {
 	private int pos = 0;
 	ByteUtils byteUtils = new ByteArrays();
 	HeaderParser headerParser = new HeaderParserImpl();
+	
+	public RawMsrpPacket() {
+	    
+	}
 
+	/**
+	 * 
+	 * @param packet
+	 * @throws ParseErrorException
+	 * @deprecated Create a factory for this
+	 */
+	@Deprecated()
 	public RawMsrpPacket(byte[] packet) throws ParseErrorException {
 		this.packet = packet;
 		// First line: MSRP id type [comment]
@@ -48,16 +59,16 @@ public class RawMsrpPacket {
 			// isolate id and type
 			String[] set = firstLine.split(" ");
 			transactionID = set[1];
-			type = PACKET_TYPE.byString(set[2]);
+			type = getType(set[2]);
 			if (type == null) {
 				throw new ParseErrorException("Illegal packet type: " + set[2]);
 			}
 		} catch (UnsupportedEncodingException e) {
-			logger.error(e);
+			logger.error("Unsupported encoding",e);
 			e.printStackTrace();
 		}
 		// We ignore the comment
-		if (type == PACKET_TYPE.SEND) {
+		if (type.equals(Send.class)) {
 			// Here be content
 			RawMsrpHeader<?> h;
 			do {
@@ -86,11 +97,18 @@ public class RawMsrpPacket {
 		}
 		contFlag = packet[packet.length - 3];
 	}
+	
+	public Class<? extends MsrpPacket> getType(String code) {
+	    if ("SEND".equals(code)) {
+	        return Send.class;
+	    }
+	    return null;
+	}
 
 	/**
 	 * @return the type
 	 */
-	public PACKET_TYPE getType() {
+	public Class<? extends MsrpPacket> getType() {
 		return type;
 	}
 
@@ -137,5 +155,28 @@ public class RawMsrpPacket {
 	public String toString() {
 		return new String(packet);
 	}
+
+    public RawMsrpPacket setType(Class<? extends MsrpPacket> type2) {
+        this.type = type2;
+        return this;
+    }
+
+    public RawMsrpPacket setID(String transactionID2) {
+        this.transactionID = transactionID2;
+        return this;
+    }
+
+    public void addHeader(RawMsrpHeader<?> h) {
+        headers.add(h);
+    }
+
+    public RawMsrpPacket setContent(byte[] body) {
+        this.content = body;
+        return this;
+    }
+
+    public void setContFlag(byte contFlag2) {
+        this.contFlag = contFlag2;
+    }
 
 }

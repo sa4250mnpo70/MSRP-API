@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import se.lbroman.msrp.impl.data.Pair;
 import se.lbroman.msrp.impl.data.Parameter;
@@ -26,7 +26,7 @@ import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
  */
 public class DefaultParamsParser<E extends Enum<E>> implements ParamsParser<E> {
 
-	private static Log logger = LogFactory.getLog(ParamsParser.class);
+	private static Logger logger = LoggerFactory.getLogger(ParamsParser.class);
 
 	public static final String qdtextChar = "[ \\t\\x21\\x23-\\x5B\\x5D-\\x7E]";
 

@@ -3,6 +3,8 @@ package se.lbroman.msrp.impl.data.packet;
 import se.lbroman.msrp.data.packet.BadRequest;
 import se.lbroman.msrp.impl.data.header.FromPathHeaderImpl;
 import se.lbroman.msrp.impl.data.header.ToPathHeaderImpl;
+import se.lbroman.msrp.impl.exception.ParseErrorException;
+import se.lbroman.msrp.impl.parser.PacketVisitor;
 
 
 
@@ -14,7 +16,7 @@ import se.lbroman.msrp.impl.data.header.ToPathHeaderImpl;
 public class BadRequestImpl extends ResponseImpl implements BadRequest {
 	/* Attributes */
 
-	// private static Log logger = LogFactory.getLog(BadRequestImpl.class);
+	// private static Logger logger = LoggerFactory.getLogger(BadRequestImpl.class);
 	public BadRequestImpl() {
 
 	}
@@ -28,11 +30,6 @@ public class BadRequestImpl extends ResponseImpl implements BadRequest {
 	}
 
 	@Override
-	public PACKET_TYPE getType() {
-		return PACKET_TYPE.R400;
-	}
-
-	@Override
 	public int getCode() {
 		return code;
 	}
@@ -41,5 +38,10 @@ public class BadRequestImpl extends ResponseImpl implements BadRequest {
 	public String getMessage() {
 		return message;
 	}
+	
+	@Override
+    public void accept(PacketVisitor visitor) throws ParseErrorException {
+        visitor.visit(this);
+    }
 	
 }

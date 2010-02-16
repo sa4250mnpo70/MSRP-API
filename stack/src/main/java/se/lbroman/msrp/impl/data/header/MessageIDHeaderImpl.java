@@ -44,8 +44,9 @@ public class MessageIDHeaderImpl extends MsrpHeaderImpl implements
 		return ident;
 	}
 	
-	public void setIdent(String ident) {
+	public MessageIDHeaderImpl setIdent(String ident) {
 	    this.ident = ident;
+	    return this;
 	}
 
 	@Override

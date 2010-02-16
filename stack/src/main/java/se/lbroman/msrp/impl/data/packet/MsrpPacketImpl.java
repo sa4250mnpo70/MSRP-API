@@ -3,17 +3,21 @@ package se.lbroman.msrp.impl.data.packet;
 import java.util.Random;
 import java.util.Vector;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import se.lbroman.msrp.Encodable;
-import se.lbroman.msrp.data.header.MsrpHeader.HEADER_TYPE;
+import se.lbroman.msrp.data.header.FromPathHeader;
+import se.lbroman.msrp.data.header.MsrpHeader;
+import se.lbroman.msrp.data.header.ToPathHeader;
 import se.lbroman.msrp.data.packet.MsrpPacket;
 import se.lbroman.msrp.impl.MsrpParser;
 import se.lbroman.msrp.impl.data.header.FromPathHeaderImpl;
 import se.lbroman.msrp.impl.data.header.MsrpHeaderImpl;
 import se.lbroman.msrp.impl.data.header.RawMsrpHeader;
 import se.lbroman.msrp.impl.data.header.ToPathHeaderImpl;
+import se.lbroman.msrp.impl.exception.ParseErrorException;
+import se.lbroman.msrp.impl.parser.PacketVisitor;
 
 /**
  * 
@@ -23,7 +27,7 @@ import se.lbroman.msrp.impl.data.header.ToPathHeaderImpl;
 public abstract class MsrpPacketImpl implements MsrpPacket,
 		Encodable<byte[]> {
 
-	private static Log logger = LogFactory.getLog(MsrpPacketImpl.class);
+	private static Logger logger = LoggerFactory.getLogger(MsrpPacketImpl.class);
 
 	public static Random r;
 	static {
@@ -52,6 +56,8 @@ public abstract class MsrpPacketImpl implements MsrpPacket,
 			extraHeaders.add(h.clone());
 		}
 	}
+	
+	public abstract void accept(PacketVisitor visitor) throws ParseErrorException;
 
 	/**
 	 * Checks if the header is a ToPathHeader or a FromPathHeader. If so they
@@ -62,6 +68,16 @@ public abstract class MsrpPacketImpl implements MsrpPacket,
 	 *            The header to be added
 	 */
 	public void setHeader(MsrpHeaderImpl h) {
+	    if (h instanceof ToPathHeaderImpl) {
+	        to = (ToPathHeaderImpl) h;
+	    } else if (h instanceof FromPathHeaderImpl) {
+	        from = (FromPathHeaderImpl) h;
+	    } else {
+	        if (logger.isDebugEnabled()) {
+	            logger.debug("Adding extra header " + h.getKey());
+	        }
+	        extraHeaders.add(h);
+	    }
 	/*	switch (h.getType()) {
 		case FromPath:
 			from = (FromPathHeaderImpl) h;
@@ -147,11 +163,12 @@ public abstract class MsrpPacketImpl implements MsrpPacket,
 	 *            the header key.
 	 * @return a header if set, otherwise null.
 	 */
-	public MsrpHeaderImpl getHeader(HEADER_TYPE header) {
-		if (header == HEADER_TYPE.FromPath) {
-			return from;
-		} else if (header == HEADER_TYPE.ToPath) {
-			return to;
+	@SuppressWarnings("unchecked")
+    public <T extends MsrpHeader> T getHeader(Class<T> header) {
+		if (FromPathHeader.class.isAssignableFrom(header)) {
+			return (T) from;
+		} else if (ToPathHeader.class.isAssignableFrom(header)) {
+			return (T) to;
 		} else {
 			for (MsrpHeaderImpl h : extraHeaders) {
 	/*			if (header == h.getType()) {
@@ -161,8 +178,6 @@ public abstract class MsrpPacketImpl implements MsrpPacket,
 		}
 		return null;
 	}
-
-	public abstract PACKET_TYPE getType();
 
 	/**
 	 * Parses a RawMsrpPacket. Subclasses must override this to set specific
@@ -174,6 +189,7 @@ public abstract class MsrpPacketImpl implements MsrpPacket,
 	 * 
 	 * @throws NotImplementedException
 	 */
+	@Deprecated
 	public void parse(RawMsrpPacket rp) {
 		logger.debug("Parsing " + rp.getType() + " packet");
 		for (RawMsrpHeader<?> h : rp.getHeaders()) {

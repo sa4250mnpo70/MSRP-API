@@ -1,11 +1,10 @@
 package se.lbroman.msrp.impl.data.header;
 
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import se.lbroman.msrp.data.header.MsrpHeader;
-import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
 import se.lbroman.msrp.impl.exception.ParseErrorException;
 import se.lbroman.msrp.impl.parser.HeaderVisitor;
 
@@ -20,7 +19,7 @@ import se.lbroman.msrp.impl.parser.HeaderVisitor;
  */
 public abstract class MsrpHeaderImpl implements MsrpHeader {
 
-	private static Log logger = LogFactory.getLog(MsrpHeaderImpl.class);
+	private static Logger logger = LoggerFactory.getLogger(MsrpHeaderImpl.class);
 
 	/**
 	 * @deprecated use the value in the raw header instead
@@ -91,6 +90,6 @@ public abstract class MsrpHeaderImpl implements MsrpHeader {
 		return true;
 	}
 	
-	public abstract void accept(HeaderVisitor v) throws HeaderParseErrorException, ParseErrorException;
+	public abstract void accept(HeaderVisitor v) throws ParseErrorException;
 	
 }

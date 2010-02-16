@@ -11,7 +11,7 @@ import se.lbroman.msrp.impl.data.ByteArrayBuilder;
  */
 public abstract class ResponseImpl extends MsrpPacketImpl implements Response {
 
-	// private static Log logger = LogFactory.getLog(ResponseImpl.class);
+	// private static Logger logger = LoggerFactory.getLogger(ResponseImpl.class);
 
 	public abstract int getCode();
 

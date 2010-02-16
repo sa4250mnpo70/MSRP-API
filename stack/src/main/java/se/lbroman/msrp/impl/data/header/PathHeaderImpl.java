@@ -6,8 +6,8 @@ package se.lbroman.msrp.impl.data.header;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import se.lbroman.msrp.data.header.PathHeader;
 import se.lbroman.msrp.impl.data.MsrpURIImpl;
@@ -19,7 +19,7 @@ import se.lbroman.msrp.impl.data.MsrpURIImpl;
 public abstract class PathHeaderImpl extends MsrpHeaderImpl implements
 		PathHeader {
 
-	private static Log logger = LogFactory.getLog(PathHeaderImpl.class);
+	private static Logger logger = LoggerFactory.getLogger(PathHeaderImpl.class);
 
 	protected LinkedList<MsrpURIImpl> URIList = new LinkedList<MsrpURIImpl>();;
 

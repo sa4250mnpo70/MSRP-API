@@ -9,7 +9,7 @@ package se.lbroman.msrp.data.packet;
  */
 public interface Auth extends Request {
 
-	public static final PACKET_TYPE type = PACKET_TYPE.AUTH;
+	public static final String type = "AUTH";
 
 	public boolean verify(Unauthorized auth, String string);
 

@@ -1,10 +1,11 @@
 package se.lbroman.msrp.impl.data.packet;
 
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import se.lbroman.msrp.data.header.MsrpHeader.HEADER_TYPE;
+import se.lbroman.msrp.data.header.MessageIDHeader;
+import se.lbroman.msrp.data.header.MsrpHeader;
 import se.lbroman.msrp.data.packet.Request;
 import se.lbroman.msrp.impl.MsrpParser;
 import se.lbroman.msrp.impl.data.ByteArrayBuilder;
@@ -22,7 +23,7 @@ public abstract class RequestImpl extends MsrpPacketImpl implements Request {
 
 	protected MessageIDHeaderImpl messageID;
 
-	private static Log logger = LogFactory.getLog(RequestImpl.class);
+	private static Logger logger = LoggerFactory.getLogger(RequestImpl.class);
 
 	{
 		generateMessageID();
@@ -90,26 +91,29 @@ public abstract class RequestImpl extends MsrpPacketImpl implements Request {
 		}
 	}
 
-	@Override
-	public MsrpHeaderImpl getHeader(HEADER_TYPE header) {
-		if (header == HEADER_TYPE.MessageID) {
-			return messageID;
+	@SuppressWarnings("unchecked")
+    @Override
+	public <T extends MsrpHeader> T getHeader(Class<T> header) {
+		if (MessageIDHeader.class.isAssignableFrom(header)) {
+			return (T) messageID;
 		} else {
-			return (MsrpHeaderImpl) super.getHeader(header);
+			return (T) super.getHeader(header);
 		}
 	}
 
 	@Override
 	public byte[] encode() {
 		ByteArrayBuilder packet = new ByteArrayBuilder();
-		packet.append(("MSRP " + id + " " + getType() + CRLF).getBytes());
+		packet.append(("MSRP " + id + " " + getCode() + CRLF).getBytes());
 		packet.append(encodeFromTo());
 		packet.append((messageID.encode() + CRLF).getBytes());
 		packet.append(encodeEndLine());
 		return packet.getBytes();
 	}
 
-	/**
+	protected abstract String getCode();
+
+    /**
 	 * Parses a RawMsrpPacket. Subclasses must override this to set specific
 	 * headers and information.
 	 * 

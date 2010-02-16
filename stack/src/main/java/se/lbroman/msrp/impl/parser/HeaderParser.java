@@ -21,4 +21,6 @@ public interface HeaderParser {
     
     MsrpHeaderImpl createHeader(String line) throws ParseErrorException;
 
+    MsrpHeaderImpl createHeader(RawMsrpHeader<?> raw) throws ParseErrorException;
+
 }

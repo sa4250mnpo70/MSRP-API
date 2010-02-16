@@ -6,9 +6,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Map.Entry;
 
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import se.lbroman.msrp.data.header.WWWAuthenticateHeader;
 import se.lbroman.msrp.impl.data.Pair;
@@ -54,8 +53,8 @@ import se.lbroman.msrp.impl.parser.ParamsParser;
 public class WWWAuthenticateHeaderImpl extends MsrpHeaderImpl implements
 		WWWAuthenticateHeader {
 
-	private static Log logger = LogFactory
-			.getLog(WWWAuthenticateHeaderImpl.class);
+	private static Logger logger = LoggerFactory
+			.getLogger(WWWAuthenticateHeaderImpl.class);
 
 	public enum PARAMETER {
 		realm, nonce, opaque, stale, algorithm, qop;

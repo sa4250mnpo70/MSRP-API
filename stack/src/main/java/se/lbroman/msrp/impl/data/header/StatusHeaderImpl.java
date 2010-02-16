@@ -1,8 +1,7 @@
 package se.lbroman.msrp.impl.data.header;
 
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import se.lbroman.msrp.data.header.StatusHeader;
 import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
@@ -23,7 +22,7 @@ import se.lbroman.msrp.impl.parser.HeaderVisitor;
  */
 public class StatusHeaderImpl extends MsrpHeaderImpl implements StatusHeader {
 
-	private static final Log logger = LogFactory.getLog(StatusHeaderImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(StatusHeaderImpl.class);
 
 	private int namespace = 000;
 

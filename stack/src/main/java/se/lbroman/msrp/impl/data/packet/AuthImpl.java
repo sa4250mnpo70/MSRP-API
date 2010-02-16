@@ -1,8 +1,7 @@
 package se.lbroman.msrp.impl.data.packet;
 
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import se.lbroman.msrp.data.packet.Auth;
 import se.lbroman.msrp.data.packet.Unauthorized;
@@ -11,6 +10,8 @@ import se.lbroman.msrp.impl.data.header.AuthorizationHeaderImpl;
 import se.lbroman.msrp.impl.data.header.FromPathHeaderImpl;
 import se.lbroman.msrp.impl.data.header.MsrpHeaderImpl;
 import se.lbroman.msrp.impl.data.header.ToPathHeaderImpl;
+import se.lbroman.msrp.impl.exception.ParseErrorException;
+import se.lbroman.msrp.impl.parser.PacketVisitor;
 
 
 /**
@@ -60,7 +61,7 @@ import se.lbroman.msrp.impl.data.header.ToPathHeaderImpl;
 public class AuthImpl extends RequestImpl implements Auth {
 	/** Attributes */
 
-	private static Log logger = LogFactory.getLog(AuthImpl.class);
+	private static Logger logger = LoggerFactory.getLogger(AuthImpl.class);
 
 	protected AuthorizationHeaderImpl auth;
 
@@ -128,12 +129,17 @@ public class AuthImpl extends RequestImpl implements Auth {
 	}
 
 	@Override
-	public PACKET_TYPE getType() {
-		return PACKET_TYPE.AUTH;
-	}
-
-	@Override
 	public AuthImpl clone() throws UnsupportedOperationException   {
 		return new AuthImpl(this);
 	}
+
+    @Override
+    public void accept(PacketVisitor visitor) throws ParseErrorException {
+        visitor.visit(this);
+    }
+
+    @Override
+    public String getCode() {
+        return "AUTH";
+    }
 }

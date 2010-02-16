@@ -14,7 +14,7 @@ import se.lbroman.msrp.data.header.ByteRangeHeader;
  */
 public interface Send extends Request {
 
-	public static final PACKET_TYPE type = PACKET_TYPE.SEND;
+	public static final String type = "SEND";
 
 	/**
 	 * Get the raw packet content

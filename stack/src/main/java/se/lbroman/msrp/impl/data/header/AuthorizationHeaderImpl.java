@@ -8,8 +8,8 @@ import java.util.Map.Entry;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import se.lbroman.msrp.data.header.AuthorizationHeader;
 import se.lbroman.msrp.impl.data.ByteArrayBuilder;
@@ -55,8 +55,8 @@ public class AuthorizationHeaderImpl extends MsrpHeaderImpl implements
 		username, realm, nonce, response, algorithm, cnonce, opaque, qop, nc;
 	}
 
-	private static Log logger = LogFactory
-			.getLog(AuthorizationHeaderImpl.class);
+	private static Logger logger = LoggerFactory
+			.getLogger(AuthorizationHeaderImpl.class);
 
 	/** Attributes */
 

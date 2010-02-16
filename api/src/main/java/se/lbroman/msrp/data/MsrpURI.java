@@ -27,16 +27,6 @@ public interface MsrpURI extends Serializable {
 	public static final int MSRP_PORT = 2855;
 
 	/**
-	 * Parses the given String into this URI
-	 * 
-	 * @param s
-	 *            the String to parse
-	 * @throws ParseErrorException
-	 *             if s is not a proper MsrpURI
-	 */
-	public void parse(String s) throws se.lbroman.msrp.exception.ParseErrorException;
-
-	/**
 	 * 
 	 * @return a copy
 	 */

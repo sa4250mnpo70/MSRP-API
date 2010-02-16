@@ -6,8 +6,8 @@ package se.lbroman.msrp.impl.parser;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import se.lbroman.msrp.impl.data.ByteArrays;
 import se.lbroman.msrp.impl.data.ByteUtils;
@@ -27,7 +27,7 @@ import se.lbroman.msrp.impl.exception.ParseErrorException;
  */
 public class StreamPacketDelimiter implements PacketDelimiter {
 
-    private static Log logger = LogFactory.getLog(StreamPacketDelimiter.class);
+    private static Logger logger = LoggerFactory.getLogger(StreamPacketDelimiter.class);
 
 	private int maxSize = 1024 * 2 * 2;
 	byte[] buffer;
@@ -81,7 +81,7 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 		try {
 			return new RawMsrpPacket(extractPacket());
 		} catch (NoPacketFoundException e) {
-			logger.debug(e);
+			logger.debug("No packet found",e);
 			if (size == maxSize) {
 			    logger.warn(String.format("Full buffer detected for size %1$s starting at %2$s",size,start));
 				throw new ParseErrorException(
@@ -89,7 +89,7 @@ public class StreamPacketDelimiter implements PacketDelimiter {
 			}
 			throw e;
 		} catch (ParseErrorException e) {
-			logger.debug(e);
+			logger.debug("Parse error",e);
 			throw e;
 		}
 

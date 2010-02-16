@@ -8,8 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import se.lbroman.msrp.data.header.AuthenticationInfoHeader;
 import se.lbroman.msrp.data.header.AuthorizationHeader;
@@ -50,7 +50,7 @@ import se.lbroman.msrp.impl.exception.ParseErrorException;
  */
 public class HeaderParserImpl implements HeaderParser, HeaderVisitor {
 
-    private static Log logger = LogFactory.getLog(HeaderParserImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(HeaderParserImpl.class);
 
     UriParser uriParser = new MsrpUriParser();
 
@@ -100,7 +100,7 @@ public class HeaderParserImpl implements HeaderParser, HeaderVisitor {
             RawMsrpHeader<?> result = new RawMsrpHeader(type, key, content);
             return result;
         } catch (ArrayIndexOutOfBoundsException e) {
-            logger.debug(e);
+            logger.debug("Parsing failed",e);
             if (logger.isTraceEnabled()) {
                 e.printStackTrace();
             }
@@ -119,8 +119,12 @@ public class HeaderParserImpl implements HeaderParser, HeaderVisitor {
 
     public MsrpHeaderImpl createHeader(String line) throws ParseErrorException {
         RawMsrpHeader<?> raw = createRawHeader(line);
+        return createHeader(raw);
+    }
+    
+    @Override
+    public MsrpHeaderImpl createHeader(RawMsrpHeader<?> raw) throws ParseErrorException {
         MsrpHeaderImpl header = instanceiate(raw);
-
         header.accept(this);
         return header;
     }
@@ -131,10 +135,10 @@ public class HeaderParserImpl implements HeaderParser, HeaderVisitor {
             header = raw.getType().newInstance();
             header.setRawHeader(raw);
         } catch (InstantiationException e) {
-            logger.error(e);
+            logger.error("Error creating new header",e);
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
-            logger.error(e);
+            logger.error("Error accessing new header",e);
             throw new RuntimeException(e);
         }
         return header;

@@ -3,13 +3,12 @@ package se.lbroman.msrp.impl.data;
 import java.util.LinkedList;
 import java.util.List;
 
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import se.lbroman.msrp.Encodable;
 import se.lbroman.msrp.data.MsrpURI;
-import se.lbroman.msrp.exception.ParseErrorException;
+import se.lbroman.msrp.impl.exception.ParseErrorException;
 
 
 /**
@@ -30,7 +29,7 @@ import se.lbroman.msrp.exception.ParseErrorException;
  */
 public class MsrpURIImpl implements Encodable<String>, MsrpURI {
 
-	private static Log logger = LogFactory.getLog(MsrpURIImpl.class);
+	private static Logger logger = LoggerFactory.getLogger(MsrpURIImpl.class);
 	/**
 	 * 
 	 */
@@ -43,17 +42,9 @@ public class MsrpURIImpl implements Encodable<String>, MsrpURI {
 	private String resource = null;
 	private String transport = "tcp";
 	private List<Parameter> parameters = new LinkedList<Parameter>();
-
-	/**
-	 * Operation
-	 * 
-	 * @param URI
-	 * @throws ParseErrorException
-	 * @deprecated Use the parser instead!
-     */
-    @Deprecated
-	public MsrpURIImpl(String URI) throws ParseErrorException {
-		parse(URI);
+	
+	public MsrpURIImpl() {
+	    
 	}
 
 	/**
@@ -145,74 +136,6 @@ public class MsrpURIImpl implements Encodable<String>, MsrpURI {
 		return new MsrpURIImpl(this);
 	}
 
-	/**
-	 * *
-	 * 
-	 * <pre>
-	 * MSRP-URI = msrp-scheme &quot;://&quot; authority [&quot;/&quot; session-id] &quot;;&quot; transport *( &quot;;&quot; URI-parameter)
-	 * msrp-scheme = &quot;msrp&quot; / &quot;msrps&quot;
-	 * authority     = [ userinfo &quot;@&quot; ] host [ &quot;:&quot; port ]
-	 * session-id = 1*( unreserved / &quot;+&quot; / &quot;=&quot; / &quot;/&quot; )
-	 * unreserved    = ALPHA / DIGIT / &quot;-&quot; / &quot;.&quot; / &quot;_&quot; / &quot;&tilde;&quot;
-	 * transport = &quot;tcp&quot; / 1*ALPHANUM
-	 * URI-parameter = token [&quot;=&quot; token]
-	 * token = 1*(%x21 / %x23-27 / %x2A-2B / %x2D-2E / %x30-39 / %x41-5A / %x5E-7E)
-	 * </pre>
-	 * 
-	 * @param s
-	 * @deprecated Use the parser instead!
-	 */
-	@Deprecated
-	public void parse(String s) throws ParseErrorException {
-		logger.trace("Parsing uri: " + s);
-		String[] set = s.split("://");
-		if (set.length != 2) {
-			throw new ParseErrorException("Incorrect uri <scheme>://<uri> : "
-					+ s);
-		}
-		scheme = set[0];
-		set = set[1].split(";");
-		// Parse everything before the parameters
-		String[] set2;
-		set2 = set[0].split("@");
-		userinfo = null;
-		if (set2.length > 1) {
-			userinfo = set2[0];
-			set2 = set2[1].split(":");
-		} else {
-			set2 = set2[0].split(":");
-		}
-		host = "ParseErrorHost.NoWhere";
-		port = 2855;
-		resource = null;
-		if (set2.length == 2) {
-			// host port/session
-			host = set2[0];
-			set2 = set2[1].split("/");
-			port = Integer.parseInt(set2[0]);
-			if (set2.length == 2) {
-				// port session
-				resource = set2[1];
-			}
-		} else if (set2.length == 1) {
-			// host/session
-			set2 = set2[0].split("/");
-			host = set2[0];
-			if (set2.length == 2) {
-				resource = set2[1];
-			}
-		}
-
-		// Parse transport and parameters
-		transport = set[1];
-		parameters = new LinkedList<Parameter>();
-		for (int i = 2; i < set.length; i++) {
-			parameters.add(new Parameter(set[i]));
-		}
-		// return new MsrpURI(scheme, userinfo, host, port, sessionID,
-		// transport, p);
-	}
-
 	public String getHost() {
 		return host;
 	}
@@ -292,5 +215,15 @@ public class MsrpURIImpl implements Encodable<String>, MsrpURI {
 			return false;
 		return true;
 	}
+
+    public MsrpURIImpl setScheme(String string) {
+        this.scheme = string;
+        return this;
+    }
+
+    public MsrpURIImpl setHost(String string) {
+        this.host = string;
+        return this;
+    }
 
 }

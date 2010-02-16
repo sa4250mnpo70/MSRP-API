@@ -3,9 +3,8 @@
  */
 package se.lbroman.msrp.impl.data.header;
 
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -15,7 +14,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class RawMsrpHeader<T extends MsrpHeaderImpl> implements Cloneable {
 
-	private static final Log logger = LogFactory.getLog(RawMsrpHeader.class);
+	private static final Logger logger = LoggerFactory.getLogger(RawMsrpHeader.class);
 	private Class<T> type;
 	private String key;
 	private String content;
@@ -65,6 +64,9 @@ public class RawMsrpHeader<T extends MsrpHeaderImpl> implements Cloneable {
     }
 
     RawMsrpHeader(RawMsrpHeader<T> orig) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("copy");
+        }
         this.type = orig.type;
         this.key = orig.key;
         this.content = orig.content;

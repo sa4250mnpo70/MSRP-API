@@ -1,11 +1,13 @@
 package se.lbroman.msrp.impl.data.packet;
 
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import se.lbroman.msrp.data.packet.NotFound;
 import se.lbroman.msrp.impl.data.header.MsrpHeaderImpl;
+import se.lbroman.msrp.impl.exception.ParseErrorException;
+import se.lbroman.msrp.impl.parser.PacketVisitor;
 
 
 /**
@@ -16,7 +18,7 @@ import se.lbroman.msrp.impl.data.header.MsrpHeaderImpl;
 @Deprecated
 public class NotFoundImpl extends ResponseImpl implements NotFound {
 
-	private Log logger = LogFactory.getLog(this.getClass());
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public byte[] encode() {
@@ -27,11 +29,6 @@ public class NotFoundImpl extends ResponseImpl implements NotFound {
 	@Override
 	public void setHeader(MsrpHeaderImpl h) {
 		super.setHeader(h);
-	}
-
-	@Override
-	public PACKET_TYPE getType() {
-		return PACKET_TYPE.R404;
 	}
 
 	@Override
@@ -50,5 +47,10 @@ public class NotFoundImpl extends ResponseImpl implements NotFound {
 		logger.error("Unimplemented");
 
 	}
+	
+	@Override
+    public void accept(PacketVisitor visitor) throws ParseErrorException {
+        visitor.visit(this);
+    }
 
 }

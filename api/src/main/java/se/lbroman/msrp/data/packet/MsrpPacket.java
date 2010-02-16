@@ -17,6 +17,7 @@ import se.lbroman.msrp.data.header.ToPathHeader;
  */
 public interface MsrpPacket {
 
+    @Deprecated
 	public enum PACKET_TYPE {
 		SEND("SEND"), VISIT("VISIT"), REPORT("REPORT"), AUTH("AUTH"), R200(
 				"200", "OK"), R400("400", "Bad Request"), R401("401",
@@ -49,6 +50,7 @@ public interface MsrpPacket {
 			}
 		}
 
+		@Deprecated
 		public static PACKET_TYPE byString(String s) {
 			for (PACKET_TYPE t : PACKET_TYPE.values()) {
 				if (s.equals(t.string)) {
@@ -67,7 +69,7 @@ public interface MsrpPacket {
 	 *            the key
 	 * @return the header
 	 */
-	public MsrpHeader getHeader(MsrpHeader.HEADER_TYPE header);
+	public <T extends MsrpHeader> T getHeader(Class<T> headerType);
 
 	/**
 	 * Get the From-Path
@@ -89,12 +91,6 @@ public interface MsrpPacket {
 	 * @return the transaction id
 	 */
 	public String getId();
-
-	/**
-	 * 
-	 * @return the packet type
-	 */
-	public PACKET_TYPE getType();
 
 	/**
 	 * 

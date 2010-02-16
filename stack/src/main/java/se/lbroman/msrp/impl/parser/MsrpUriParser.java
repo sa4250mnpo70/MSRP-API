@@ -5,17 +5,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import se.lbroman.msrp.impl.data.MsrpURIImpl;
 import se.lbroman.msrp.impl.data.Parameter;
-import se.lbroman.msrp.impl.exception.HeaderParseErrorException;
 import se.lbroman.msrp.impl.exception.ParseErrorException;
 
 public class MsrpUriParser implements UriParser {
 
-    private static final Log logger = LogFactory.getLog(MsrpUriParser.class);
+    private static final Logger logger = LoggerFactory.getLogger(MsrpUriParser.class);
     
     @Override
     public MsrpURIImpl createMsrpUri(String data) throws ParseErrorException {
@@ -83,8 +82,8 @@ public class MsrpUriParser implements UriParser {
             try {
                 URIList.add(createMsrpUri(s));
             } catch (ParseErrorException e) {
-                logger.error(e);
-                throw new HeaderParseErrorException(e.getMessage());
+                logger.error("Parser error",e);
+                throw new ParseErrorException(e.getMessage());
             }
         }
         return URIList;
