@@ -82,7 +82,7 @@ public class MockFactory {
         RawMsrpPacket rp = new RawMsrpPacket();
         rp.setType(type);
         rp.setID("trans-" + count++);
-        rp.setContent("åäö".getBytes());
+        rp.setContent("\u00e5\u00e4\u00f6".getBytes());
         rp.addHeader(getRawTo());
         return rp;
     }
