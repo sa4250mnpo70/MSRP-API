@@ -35,7 +35,7 @@ public class PacketParserTest {
     @Test
     public void content() throws ParseErrorException {
         RawMsrpPacket packet = MockFactory.getRaw(Send.class);
-        String content = "This is a nice å ä ö packet é";
+        String content = "This is a nice \u00e5 \u00e4 \u00f6 packet \u00e9";
         packet.setContent(content.getBytes());
         SendImpl result = (SendImpl) parser.parsePacket(packet);
         assertEquals(content,new String(result.getContent()));
